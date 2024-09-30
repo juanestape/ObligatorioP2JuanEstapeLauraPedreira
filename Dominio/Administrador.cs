@@ -10,6 +10,8 @@ namespace Dominio
     {
         public Administrador(string nombre, string apellido, string email, string contraseña):base(nombre, apellido, email, contraseña)
         {
+
+            // AGREGO COMENTARIO DOMINGO
         }
     }
 }
