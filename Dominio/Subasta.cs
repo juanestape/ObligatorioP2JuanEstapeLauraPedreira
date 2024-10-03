@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public class Subasta
+    public class Subasta : Publicacion
     {
         private List<Oferta> _ofertas = new List<Oferta>();
 
@@ -14,6 +14,8 @@ namespace Dominio
         {
          _ofertas = ofertas;
         }
+
+        public void AltaOferta() { }
 
     }
 }
