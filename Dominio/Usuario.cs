@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dominio.Interfases;
 
 namespace Dominio
 {
-    public class Usuario
+    public class Usuario : IValidable
     {
         protected int _id;
         protected static int s_idUlt = 1;
@@ -23,6 +24,14 @@ namespace Dominio
             _apellido = apellido;
             _email = email;
             _contraseña = contraseña;
+        }
+
+        public void Validar()
+        {
+            if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio");
+            if (string.IsNullOrEmpty(_apellido)) throw new Exception("El apellido no puede ser vacio.");
+            if (string.IsNullOrEmpty(_email)) throw new Exception("El email no puede ser vacio.");
+            if (string.IsNullOrEmpty(_contraseña)) throw new Exception("La contraseña no puede ser vacia.");
         }
     }
 }

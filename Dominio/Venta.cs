@@ -10,7 +10,7 @@ namespace Dominio
     {
         private bool _ofertaR;
     
-        public Venta((string nombre, EstadoPublicacion estado, DateTime fechaPublicacion, List<Articulo> articulos, bool ofertaR):base(nombre, estado, fechaPublicacion, articulos)
+        public Venta(string nombre, EstadoPublicacion estado, DateTime fechaPublicacion, List<Articulo> articulos, bool ofertaR):base(nombre, estado, fechaPublicacion, articulos)
         {
             _ofertaR = ofertaR;
         }
