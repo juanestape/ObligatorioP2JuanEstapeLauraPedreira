@@ -133,33 +133,35 @@ namespace Consola
 
             PressToContinue();
         }
+        static void ListarPublicacionesEntreFechas()
+        {
+            Console.Clear();
+            CambioDeColor("Listado de Publicaciones entre fechas dadas", ConsoleColor.Yellow);
+            Console.WriteLine();
 
+            DateTime fecha1 = PedirFecha("Ingrese la primer fecha: ");
+            DateTime fecha2 = PedirFecha("Ingrese la segunda fecha: ");
 
-        //REVISAR PROBLEMA CON FECHAS
-        //static void ListarPublicacionesEntreFechas()
-        //{
-        //    Console.Clear();
-        //    CambioDeColor("Listado de Publicaciones entre fechas dadas", ConsoleColor.Yellow);
-        //    Console.WriteLine();
+            if (fecha1 > fecha2)
+            {
+                (fecha1, fecha2) = (fecha2, fecha1);
+            }
 
-        //    DateTime fecha1 = PedirFecha("Ingrese la primer fecha: ");
-        //    DateTime fecha2 = PedirFecha("Ingrese la segunda fecha: ");
-        //    Console.WriteLine(fecha1.ToShortDateString());
-        //    List<Publicacion> fechasBuscadas = miSistema.PublicacionesEntreFechas(fecha1, fecha2);
-        //    if (fechasBuscadas.Count == 0)
-        //    {
-        //        MostrarError($"No existen publicaciones entre las fechas ingresadas");
-        //    }
-        //    else
-        //    {
-        //        foreach (Publicacion p in fechasBuscadas)
-        //        {
-        //            Console.WriteLine(p);
-        //        }
-        //    }
+            List<Publicacion> publicacionesEncontradas = miSistema.PublicacionesEntreFechas(fecha1, fecha2);
+            if (publicacionesEncontradas.Count == 0)
+            {
+                MostrarError($"No existen publicaciones entre las fechas ingresadas");
+            }
+            else
+            {
+                foreach (Publicacion p in publicacionesEncontradas)
+                {
+                    Console.WriteLine(p);
+                }
+            }
 
-        //    PressToContinue();
-        //}
+            PressToContinue();
+        }
 
         static void PressToContinue()
         {

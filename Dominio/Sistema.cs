@@ -332,16 +332,10 @@ namespace Dominio
         public List<Publicacion> PublicacionesEntreFechas(DateTime fecha1, DateTime fecha2)
         {
             List<Publicacion> publicaciones = new List<Publicacion>();
-            DateTime aux1 = fecha1;
-            DateTime aux2 = fecha2;
-            if (fecha1 > fecha2)
-            {
-                aux1 = fecha2;
-                aux2 = fecha1;
-            }
+
             foreach (Publicacion p in _publicaciones)
             {
-                if (p.Fecha > aux1 && p.Fecha < aux2) publicaciones.Add(p);
+                if (p.Fecha >= fecha1 && p.Fecha <= fecha2) publicaciones.Add(p);
             }
             return publicaciones;
         }
