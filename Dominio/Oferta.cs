@@ -7,7 +7,7 @@ using Dominio.Interfases;
 
 namespace Dominio
 {
-    internal class Oferta : IValidable
+    public class Oferta : IValidable
     {
         private int _id;
         private static int s_idUlt = 1;
@@ -17,14 +17,20 @@ namespace Dominio
 
         public Oferta(Usuario cliente, double monto, DateTime fecha)
         {
+            _id = s_idUlt;
+            s_idUlt++;
             _cliente = cliente;
             _monto = monto;
             _fecha = fecha;
         }
-
+        public int Id
+        {
+            get { return _id; }
+        }
         public void Validar()
         {
-            if(_monto <= 0)throw new Exception("El monto de la oferta debe ser mayor a 0"); 
+            if (_monto <= 0) throw new Exception("El monto de la oferta debe ser mayor a 0");
         }
+
     }
 }

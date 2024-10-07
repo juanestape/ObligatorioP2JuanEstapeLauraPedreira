@@ -7,7 +7,7 @@ using Dominio.Interfases;
 
 namespace Dominio
 {
-    public class Usuario : IValidable
+    public abstract class Usuario : IValidable
     {
         protected int _id;
         protected static int s_idUlt = 1;
@@ -24,6 +24,11 @@ namespace Dominio
             _apellido = apellido;
             _email = email;
             _contraseña = contraseña;
+        }
+
+        public int Id
+        {
+            get { return _id; }
         }
 
         public void Validar()
