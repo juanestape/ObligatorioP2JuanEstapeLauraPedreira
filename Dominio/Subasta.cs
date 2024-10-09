@@ -10,12 +10,21 @@ namespace Dominio
     {
         private List<Oferta> _ofertas = new List<Oferta>();
 
-        public Subasta(string nombre, EstadoPublicacion estado, DateTime fechaPublicacion, List<Articulo> articulos, List<Oferta> ofertas):base(nombre, estado, fechaPublicacion, articulos) 
+        public Subasta(string nombre, EstadoPublicacion estado, DateTime fechaPublicacion) : base(nombre, estado, fechaPublicacion)
         {
-         _ofertas = ofertas;
         }
 
-        public void AltaOferta() { }
+        public List<Oferta> Oferta
+        {
+            get { return _ofertas; }
+        }
 
+        public void AltaOferta(Oferta o)
+        {
+            if (o == null) throw new Exception("La oferta no puede ser nulo");
+            o.Validar();
+            if (_ofertas.Count > 0 && o.Monto <= this._ofertas[this._ofertas.Count - 1].Monto) throw new Exception("La oferta debe ser mayor a la oferta mas alta");
+            _ofertas.Add(o);
+        }
     }
 }

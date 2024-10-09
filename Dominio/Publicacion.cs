@@ -3,28 +3,25 @@ using System.Linq;
 
 namespace Dominio
 {
-    public class Publicacion : IValidable
+    public abstract class Publicacion : IValidable
     {
-
         protected int _id;
         protected static int s_idUlt = 1;
         protected string _nombre;
         protected EstadoPublicacion _estado;
         protected DateTime _fechaPublicacion;
-        protected List<Articulo> _articulos = new List<Articulo>;
+        protected List<Articulo> _articulos = new List<Articulo>();
         protected Usuario? _clienteCompra;
         protected Usuario? _usuarioFinaliza;
         protected DateTime? _fechaFin;
 
-
-        public Publicacion(string nombre, EstadoPublicacion estado, DateTime fechaPublicacion, List<Articulo> articulos)
+        public Publicacion(string nombre, EstadoPublicacion estado, DateTime fechaPublicacion)
         {
             _id = s_idUlt;
             s_idUlt++;
             _nombre = nombre;
             _estado = estado;
             _fechaPublicacion = fechaPublicacion;
-            _articulos = articulos;
         }
 
         public int Id
@@ -47,9 +44,27 @@ namespace Dominio
             get { return _fechaPublicacion; }
         }
 
+        public List<Articulo> Articulo
+        {
+            get { return _articulos; }
+        }
+
         public void Validar()
         {
-            if(string.IsNullOrEmpty(_nombre))throw new Exception("El nombre no puede ser vacio.");
-        }   
+            if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio.");
+        }
+
+        public void AltaArticulo(Articulo a)
+        {
+            if (a == null) throw new Exception("El artículo no puede ser nulo");
+            a.Validar();
+            _articulos.Add(a);
+        }
+        public override string ToString()
+        {
+            string retorno = $"ID: {_id} - Nombre: {_nombre} - Estado {_estado} - Fecha de publicación: {_fechaPublicacion.ToShortDateString()}";
+
+            return retorno;
+        }
     }
 }

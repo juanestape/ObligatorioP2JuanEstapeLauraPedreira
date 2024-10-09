@@ -9,8 +9,8 @@ namespace Dominio
     public class Venta : Publicacion
     {
         private bool _ofertaR;
-    
-        public Venta(string nombre, EstadoPublicacion estado, DateTime fechaPublicacion, List<Articulo> articulos, bool ofertaR):base(nombre, estado, fechaPublicacion, articulos)
+
+        public Venta(string nombre, EstadoPublicacion estado, DateTime fechaPublicacion, bool ofertaR) : base(nombre, estado, fechaPublicacion)
         {
             _ofertaR = ofertaR;
         }
