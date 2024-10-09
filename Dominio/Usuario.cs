@@ -14,16 +14,16 @@ namespace Dominio
         protected string _nombre;
         protected string _apellido;
         protected string _email;
-        protected string _contraseña;
+        protected string _contrasenia;
 
-        public Usuario(string nombre, string apellido, string email, string contraseña)
+        public Usuario(string nombre, string apellido, string email, string contrasenia)
         {
             _id = s_idUlt;
             s_idUlt++;
             _nombre = nombre;
             _apellido = apellido;
             _email = email;
-            _contraseña = contraseña;
+            _contrasenia = contrasenia;
         }
 
         public int Id
@@ -36,7 +36,7 @@ namespace Dominio
             if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio");
             if (string.IsNullOrEmpty(_apellido)) throw new Exception("El apellido no puede ser vacio.");
             if (string.IsNullOrEmpty(_email)) throw new Exception("El email no puede ser vacio.");
-            if (string.IsNullOrEmpty(_contraseña)) throw new Exception("La contraseña no puede ser vacia.");
+            if (string.IsNullOrEmpty(_contrasenia)) throw new Exception("La contraseña no puede ser vacia.");
         }
     }
 }

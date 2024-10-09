@@ -297,13 +297,12 @@ namespace Dominio
             if (subastaBuscada == null) throw new Exception("No se encontro subasta con ese Id");
             Usuario clienteBuscado = ObtenerUsuarioPorId(idCliente);
             if (clienteBuscado == null) throw new Exception("No se encontro cliente con ese Id");
-            bool x = false;
+            bool tieneOferta = false;
             foreach (Oferta a in subastaBuscada.Oferta)
             {
-                if (a.Cliente.Equals(clienteBuscado)) x = true;
+                if (a.Cliente.Equals(clienteBuscado)) tieneOferta = true;
             }
-            if (x = true) throw new Exception("Este cliente ya realizo una oferta");
-
+            if (tieneOferta) throw new Exception("Este cliente ya realizo una oferta");
             Oferta o = new Oferta(clienteBuscado, monto, fecha);
             subastaBuscada.AltaOferta(o);
         }

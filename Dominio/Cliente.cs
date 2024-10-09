@@ -10,7 +10,7 @@ namespace Dominio
     {
         private double _saldo;
 
-        public Cliente(string nombre, string apellido, string email, string contraseña, double saldo) : base(nombre, apellido, email, contraseña)
+        public Cliente(string nombre, string apellido, string email, string contrasenia, double saldo) : base(nombre, apellido, email, contrasenia)
         {
             _saldo = saldo;
         }
