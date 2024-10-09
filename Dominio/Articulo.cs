@@ -48,5 +48,11 @@ namespace Dominio
             return retorno;
         }
 
+        public override bool Equals(object obj)
+        {
+            Articulo a = obj as Articulo;
+            return a != null && this._id.Equals(a._id);
+        }
+
     }
 }

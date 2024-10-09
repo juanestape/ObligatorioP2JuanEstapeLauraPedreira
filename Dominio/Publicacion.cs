@@ -15,7 +15,6 @@ namespace Dominio
         protected Usuario? _usuarioFinaliza;
         protected DateTime? _fechaFin;
 
-
         public Publicacion(string nombre, EstadoPublicacion estado, DateTime fechaPublicacion)
         {
             _id = s_idUlt;
@@ -45,6 +44,11 @@ namespace Dominio
             get { return _fechaPublicacion; }
         }
 
+        public List<Articulo> Articulo
+        {
+            get { return _articulos; }
+        }
+
         public void Validar()
         {
             if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio.");
@@ -56,11 +60,13 @@ namespace Dominio
             a.Validar();
             _articulos.Add(a);
         }
-        public override string ToString()
-        {
-            string retorno = $"ID: {_id} - Nombre: {_nombre} - Estado {_estado} - Fecha de publicación: {_fechaPublicacion.ToShortDateString()}";
 
-            return retorno;
-        }
+        // DESCOMENTAR MÉTODO, ES PARA MENÚ 4:
+        //public override string ToString()
+        //{
+        //    string retorno = $"ID: {_id} - Nombre: {_nombre} - Estado {_estado} - Fecha de publicación: {_fechaPublicacion.ToShortDateString()}";
+
+        //    return retorno;
+        //}
     }
 }

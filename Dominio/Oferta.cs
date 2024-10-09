@@ -27,10 +27,28 @@ namespace Dominio
         {
             get { return _id; }
         }
+
+        public double Monto
+        {
+            get { return _monto; }
+        }
+
+        public Usuario Cliente
+        {
+            get { return _cliente; }
+        }
         public void Validar()
         {
             if (_monto <= 0) throw new Exception("El monto de la oferta debe ser mayor a 0");
         }
 
+        #region MÉTODOS EXTRAS DE PRUEBA
+        public override string ToString()
+        {
+            string retorno = $"ID: {_id} - Cliente: {_cliente} - Monto {_monto} - Fecha: {_fecha.ToShortDateString()}";
+
+            return retorno;
+        }
+        #endregion
     }
 }

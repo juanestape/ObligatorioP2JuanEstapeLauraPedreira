@@ -15,16 +15,17 @@ namespace Dominio
             _saldo = saldo;
         }
 
-        public int Id
-        {
-            get { return _id; }
-        }
-
         public override string ToString()
         {
-            string retorno = $"Nombre: {_nombre} - Apellido: {_apellido} - Email: {_email} - Contraseña: {_contraseña} - Saldo: {_saldo}";
+            string retorno = $"Nombre: {_nombre} - Apellido: {_apellido} - Email: {_email} - Saldo: {_saldo}";
 
             return retorno;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Cliente c = obj as Cliente;
+            return c != null && this._id.Equals(c._id);
         }
     }
 }

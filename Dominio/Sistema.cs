@@ -12,16 +12,13 @@ namespace Dominio
         public List<Articulo> _articulos = new List<Articulo>();
         public List<Publicacion> _publicaciones = new List<Publicacion>();
         public List<Usuario> _usuarios = new List<Usuario>();
-        public List<Cliente> _clientes = new List<Cliente>();
-        public List<Subasta> _subastas = new List<Subasta>();
-
         public Sistema()
         {
             PrecargarArticulos();
             PrecargarUsuarios();
             PrecargarPublicaciones();
             PrecargarArticuloAPublicacion();
-            //PrecargarOfertasASubastas(); // Precarga comentada porque da error, no encuentra id
+            PrecargarOfertasASubastas();
         }
         public void AltaUsuarios(Usuario usuario)
         {
@@ -52,6 +49,7 @@ namespace Dominio
         {
             {
                 if (articulo == null) throw new Exception("El articulo no puede ser nulo");
+                if (_articulos.Contains(articulo)) throw new Exception("Este articulo ya existe");
                 articulo.Validar();
                 _articulos.Add(articulo);
             }
@@ -142,17 +140,17 @@ namespace Dominio
             AltaPublicacion(new Subasta("Fitness Completo", EstadoPublicacion.ABIERTA, new DateTime(2024, 06, 28)));
         }
 
-        // ARTICULOS A PUBLICACIONES
+        // MÉTODOS PARA PRECARGAR ARTICULOS A PUBLICACIONES
         public Publicacion ObtenerPublicacionPorId(int id)
         {
-            Publicacion buscado = null;
+            Publicacion buscada = null;
             int i = 0;
-            while (i < _publicaciones.Count && buscado == null)
+            while (i < _publicaciones.Count && buscada == null)
             {
-                if (_publicaciones[i].Id == id) buscado = _publicaciones[i];
+                if (_publicaciones[i].Id == id) buscada = _publicaciones[i];
                 i++;
             }
-            return buscado;
+            return buscada;
         }
 
         public Articulo ObtenerArticuloPorId(int id)
@@ -169,9 +167,10 @@ namespace Dominio
         public void AgregarArticuloAPublicacion(int idPublicacion, int idArticulo)
         {
             Publicacion publicacionBuscada = ObtenerPublicacionPorId(idPublicacion);
-            if (publicacionBuscada == null) throw new Exception("No se encontró publicación con ese id");
+            if (publicacionBuscada == null) throw new Exception("No se encontro publicacion con ese Id");
             Articulo articuloBuscado = ObtenerArticuloPorId(idArticulo);
-            if (articuloBuscado == null) throw new Exception("No se encontró artículo con ese id");
+            if (articuloBuscado == null) throw new Exception("No se encontro articulo con ese Id");
+            if (publicacionBuscada.Articulo.Contains(articuloBuscado)) throw new Exception("Este articulo ya existe en la publicacion");
             publicacionBuscada.AltaArticulo(articuloBuscado);
         }
 
@@ -268,25 +267,25 @@ namespace Dominio
             AgregarArticuloAPublicacion(20, 45);
         }
 
-        // OFERTAS A SUBASTAS
-        public Cliente ObtenerClientePorId(int id)
-        {
-            Cliente buscado = null;
-            int i = 0;
-            while (i < _clientes.Count && buscado == null)
-            {
-                if (_clientes[i].Id == id) buscado = _clientes[i];
-                i++;
-            }
-            return buscado;
-        }
+        // MÉTODOS PARA PRECARGAR OFERTAS A SUBASTAS
         public Subasta ObtenerSubastaPorId(int id)
         {
-            Subasta buscado = null;
+            Subasta buscada = null;
             int i = 0;
-            while (i < _subastas.Count && buscado == null)
+            while (i < _publicaciones.Count && buscada == null)
             {
-                if (_subastas[i].Id == id) buscado = _subastas[i];
+                if (_publicaciones[i].Id == id && _publicaciones[i] is Subasta) buscada = _publicaciones[i] as Subasta;
+                i++;
+            }
+            return buscada;
+        }
+        public Usuario ObtenerUsuarioPorId(int id)
+        {
+            Usuario buscado = null;
+            int i = 0;
+            while (i < _usuarios.Count && buscado == null)
+            {
+                if (_usuarios[i].Id == id) buscado = _usuarios[i];
                 i++;
             }
             return buscado;
@@ -294,12 +293,19 @@ namespace Dominio
 
         public void AgregaroOfertaASubasta(int idSubasta, int idCliente, double monto, DateTime fecha)
         {
-            Subasta subastaBuscado = ObtenerSubastaPorId(idSubasta);
-            if (subastaBuscado == null) throw new Exception("No se encontró subasta con ese id");
-            Cliente clienteBuscado = ObtenerClientePorId(idCliente);
-            if (clienteBuscado == null) throw new Exception("No se encontró cliente con ese id");
+            Subasta subastaBuscada = ObtenerSubastaPorId(idSubasta);
+            if (subastaBuscada == null) throw new Exception("No se encontro subasta con ese Id");
+            Usuario clienteBuscado = ObtenerUsuarioPorId(idCliente);
+            if (clienteBuscado == null) throw new Exception("No se encontro cliente con ese Id");
+            bool x = false;
+            foreach (Oferta a in subastaBuscada.Oferta)
+            {
+                if (a.Cliente.Equals(clienteBuscado)) x = true;
+            }
+            if (x = true) throw new Exception("Este cliente ya realizo una oferta");
+
             Oferta o = new Oferta(clienteBuscado, monto, fecha);
-            subastaBuscado.AltaOferta(o);
+            subastaBuscada.AltaOferta(o);
         }
         private void PrecargarOfertasASubastas()
         {
@@ -319,7 +325,7 @@ namespace Dominio
             return clientesBuscados;
         }
 
-        public List<Articulo> MostrarPorCategoria(string categoria)
+        public List<Articulo> ArticulosPorCategoria(string categoria)
         {
             List<Articulo> listado = new List<Articulo>();
             foreach (Articulo a in _articulos)
@@ -333,9 +339,14 @@ namespace Dominio
         {
             List<Publicacion> publicaciones = new List<Publicacion>();
 
+            if (fecha1 > fecha2)
+            {
+                (fecha1, fecha2) = (fecha2, fecha1);
+            }
+
             foreach (Publicacion p in _publicaciones)
             {
-                if (p.Fecha >= fecha1 && p.Fecha <= fecha2) publicaciones.Add(p);
+                if (p.Fecha.Date >= fecha1 && p.Fecha.Date <= fecha2) publicaciones.Add(p);
             }
             return publicaciones;
         }

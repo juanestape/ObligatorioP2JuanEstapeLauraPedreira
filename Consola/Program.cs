@@ -54,8 +54,8 @@ namespace Consola
             CambioDeColor("**************", ConsoleColor.Cyan);
             Console.WriteLine();
             Console.WriteLine("1 - Listado de Clientes");
-            Console.WriteLine("2 - Listado de Artículos por categoría dada");
-            Console.WriteLine("3 - Alta de Artículo");
+            Console.WriteLine("2 - Listado de Articulos por categoria dada");
+            Console.WriteLine("3 - Alta de Articulo");
             Console.WriteLine("4 - Listado de Publicaciones entre fechas dadas");
             Console.WriteLine("5 - Listado de Publicaciones");
             Console.WriteLine("0 - Salir");
@@ -64,13 +64,13 @@ namespace Consola
         static void ListarClientes()
         {
             Console.Clear();
-            CambioDeColor("Listado de Clientes", ConsoleColor.Yellow);
+            CambioDeColor("LISTADO DE CLIENTES", ConsoleColor.Yellow);
             Console.WriteLine();
 
             List<Usuario> todasLosClientes = miSistema.MostrarClientes();
             if (todasLosClientes.Count == 0)
             {
-                MostrarError("No exiten Clientes en el sistema");
+                MostrarError("No existen Clientes en el sistema");
             }
             else
             {
@@ -86,22 +86,30 @@ namespace Consola
         static void ListarArticulosDadaCategoria()
         {
             Console.Clear();
-            CambioDeColor("Listado de Artículos dada una Categoría", ConsoleColor.Yellow);
+            CambioDeColor("LISTADO DE ARTICULOS POR CATEGORIA DADA", ConsoleColor.Yellow);
             Console.WriteLine();
 
-            string categoria = PedirPalabras("Ingrese una categoría para buscar: ");
+            string categoria = PedirPalabras("Ingrese una categoria para buscar: ");
 
-            List<Articulo> categoriaBuscada = miSistema.MostrarPorCategoria(categoria);
-            if (categoriaBuscada.Count == 0)
+            try
             {
-                MostrarError($"No exite la categoría: {categoria}");
-            }
-            else
-            {
-                foreach (Articulo a in categoriaBuscada)
+                if (string.IsNullOrEmpty(categoria)) throw new Exception("Ha ingresado una categoria vacia");
+                List<Articulo> articulosEncontrados = miSistema.ArticulosPorCategoria(categoria);
+                if (articulosEncontrados.Count == 0)
                 {
-                    Console.WriteLine(a);
+                    MostrarError($"No existe la categoria: {categoria}");
                 }
+                else
+                {
+                    foreach (Articulo a in articulosEncontrados)
+                    {
+                        Console.WriteLine(a);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError(ex.Message);
             }
 
             PressToContinue();
@@ -110,17 +118,17 @@ namespace Consola
         static void AltaArticulo()
         {
             Console.Clear();
-            CambioDeColor("Alta de Artículo", ConsoleColor.Yellow);
+            CambioDeColor("ALTA DE ARTICULO", ConsoleColor.Yellow);
             Console.WriteLine();
 
-            string nombre = PedirPalabras("Ingrese nombre del artículo: ");
-            string categoria = PedirPalabras("Ingrese categoria del artículo: ");
-            double precioVenta = PedirNumeros("Ingrese precio de venta del artículo: ");
+            string nombre = PedirPalabras("Ingrese nombre del articulo: ");
+            string categoria = PedirPalabras("Ingrese categoria del articulo: ");
+            double precioVenta = PedirNumeros("Ingrese precio de venta del articulo: ");
 
             try
             {
                 if (string.IsNullOrEmpty(nombre)) throw new Exception("Ha ingresado un nombre vacio");
-                if (string.IsNullOrEmpty(categoria)) throw new Exception("Ha ingresado una categoría vacia");
+                if (string.IsNullOrEmpty(categoria)) throw new Exception("Ha ingresado una categoria vacia");
                 if (precioVenta < 0) throw new Exception("El precio de venta no puede ser negativo");
                 Articulo nuevoArticulo = new Articulo(nombre, categoria, precioVenta);
                 miSistema.AltaArticulo(nuevoArticulo);
@@ -136,16 +144,11 @@ namespace Consola
         static void ListarPublicacionesEntreFechas()
         {
             Console.Clear();
-            CambioDeColor("Listado de Publicaciones entre fechas dadas", ConsoleColor.Yellow);
+            CambioDeColor("LISTADO DE PUBLICACIONES ENTRE FECHAS DADAS", ConsoleColor.Yellow);
             Console.WriteLine();
 
             DateTime fecha1 = PedirFecha("Ingrese la primer fecha: ");
             DateTime fecha2 = PedirFecha("Ingrese la segunda fecha: ");
-
-            if (fecha1 > fecha2)
-            {
-                (fecha1, fecha2) = (fecha2, fecha1);
-            }
 
             List<Publicacion> publicacionesEncontradas = miSistema.PublicacionesEntreFechas(fecha1, fecha2);
             if (publicacionesEncontradas.Count == 0)
