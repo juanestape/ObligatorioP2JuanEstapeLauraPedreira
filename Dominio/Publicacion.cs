@@ -60,13 +60,11 @@ namespace Dominio
             a.Validar();
             _articulos.Add(a);
         }
+        public override string ToString()
+        {
+            string retorno = $"ID: {_id} - Nombre: {_nombre} - Estado {_estado} - Fecha de publicación: {_fechaPublicacion.ToShortDateString()}";
 
-        // DESCOMENTAR MÉTODO, ES PARA MENÚ 4:
-        //public override string ToString()
-        //{
-        //    string retorno = $"ID: {_id} - Nombre: {_nombre} - Estado {_estado} - Fecha de publicación: {_fechaPublicacion.ToShortDateString()}";
-
-        //    return retorno;
-        //}
+            return retorno;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Dominio;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Consola
 {
@@ -30,9 +31,6 @@ namespace Consola
                     case "4":
                         ListarPublicacionesEntreFechas();
                         break;
-                    case "5":
-                        ListarPublicaciones();
-                        break;
                     case "0":
                         Console.WriteLine("Salir ...");
                         break;
@@ -57,7 +55,6 @@ namespace Consola
             Console.WriteLine("2 - Listado de Articulos por categoria dada");
             Console.WriteLine("3 - Alta de Articulo");
             Console.WriteLine("4 - Listado de Publicaciones entre fechas dadas");
-            Console.WriteLine("5 - Listado de Publicaciones");
             Console.WriteLine("0 - Salir");
         }
 
@@ -179,8 +176,21 @@ namespace Consola
 
         static string PedirPalabras(string mensaje)
         {
-            Console.Write(mensaje);
-            string datosPedidos = Console.ReadLine();
+            bool exito = false;
+            string datosPedidos = string.Empty;
+            while (exito == false)
+            {
+                Console.Write(mensaje);
+                datosPedidos = Console.ReadLine();
+                if (string.IsNullOrEmpty(datosPedidos))
+                {
+                    MostrarError("ERROR: Debe ingresar el dato solicitado.");
+                }
+                else
+                {
+                    exito = true;
+                }
+            }
             return datosPedidos;
         }
 
@@ -240,31 +250,6 @@ namespace Consola
             Console.ForegroundColor = color;
             Console.WriteLine(mensaje);
             Console.ForegroundColor = ConsoleColor.Gray;
-        }
-
-        #endregion
-
-        #region MÉTODOS EXTRAS DE PRUEBA
-        static void ListarPublicaciones()
-        {
-            Console.Clear();
-            CambioDeColor("Listado de Publicaciones", ConsoleColor.Yellow);
-            Console.WriteLine();
-
-            List<Publicacion> todasLasPublicaciones = miSistema.MostrarPublicaciones();
-            if (todasLasPublicaciones.Count == 0)
-            {
-                MostrarError("No exiten Publicaciones en el sistema");
-            }
-            else
-            {
-                foreach (Publicacion u in todasLasPublicaciones)
-                {
-                    Console.WriteLine(u);
-                }
-            }
-
-            PressToContinue();
         }
 
         #endregion

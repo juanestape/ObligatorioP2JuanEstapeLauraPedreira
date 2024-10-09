@@ -349,20 +349,5 @@ namespace Dominio
             }
             return publicaciones;
         }
-
-        #region MÉTODOS EXTRAS DE PRUEBA
-
-        // Método para mostrar publicaciones precargadas
-        public List<Publicacion> MostrarPublicaciones()
-        {
-            List<Publicacion> listado = new List<Publicacion>();
-            foreach (Publicacion c in _publicaciones)
-            {
-                listado.Add(c);
-            }
-            return listado;
-        }
-
-        #endregion
     }
 }
