@@ -12,7 +12,7 @@ namespace Dominio
         public List<Articulo> _articulos = new List<Articulo>();
         public List<Publicacion> _publicaciones = new List<Publicacion>();
         public List<Usuario> _usuarios = new List<Usuario>();
-        public Sistema()
+        public Sistema() // Se invocan los métodos de precarga para que el Sistema inicie con datos
         {
             PrecargarArticulos();
             PrecargarUsuarios();
@@ -29,7 +29,7 @@ namespace Dominio
             }
         }
 
-        private void PrecargarUsuarios()
+        private void PrecargarUsuarios() // Utiliza el métdo AltaUsuarios para crear un nuevo Usuario tipo Administrador o Cliente
         {
             AltaUsuarios(new Administrador("Alejandro", "García", "alejandro.garcia@admin.com", "AdminAle1234"));
             AltaUsuarios(new Administrador("Camila", "Díaz", "camila.diaz@admin.com", "AdminCamila1234"));
@@ -141,7 +141,7 @@ namespace Dominio
         }
 
         // MÉTODOS PARA PRECARGAR ARTICULOS A PUBLICACIONES
-        public Publicacion ObtenerPublicacionPorId(int id)
+        public Publicacion ObtenerPublicacionPorId(int id) // Método para conseguir objeto a través del Id
         {
             Publicacion buscada = null;
             int i = 0;
@@ -164,14 +164,14 @@ namespace Dominio
             }
             return buscado;
         }
-        public void AgregarArticuloAPublicacion(int idPublicacion, int idArticulo)
+        public void AgregarArticuloAPublicacion(int idPublicacion, int idArticulo) // Recibe un Id de Publicación y un Id de Artículos, los busca con los métodos anteriores y agrega el artículo a la publicación
         {
             Publicacion publicacionBuscada = ObtenerPublicacionPorId(idPublicacion);
             if (publicacionBuscada == null) throw new Exception("No se encontro publicacion con ese Id");
             Articulo articuloBuscado = ObtenerArticuloPorId(idArticulo);
             if (articuloBuscado == null) throw new Exception("No se encontro articulo con ese Id");
             if (publicacionBuscada.Articulo.Contains(articuloBuscado)) throw new Exception("Este articulo ya existe en la publicacion");
-            publicacionBuscada.AltaArticulo(articuloBuscado);
+            publicacionBuscada.AgregarArticulo(articuloBuscado);
         }
 
         private void PrecargarArticuloAPublicacion()
@@ -291,7 +291,7 @@ namespace Dominio
             return buscado;
         }
 
-        public void AgregaroOfertaASubasta(int idSubasta, int idCliente, double monto, DateTime fecha)
+        public void AgregaroOfertaASubasta(int idSubasta, int idCliente, double monto, DateTime fecha) // Método para agregar una oferta a una subasta
         {
             Subasta subastaBuscada = ObtenerSubastaPorId(idSubasta);
             if (subastaBuscada == null) throw new Exception("No se encontro subasta con ese Id");

@@ -58,7 +58,7 @@ namespace Consola
             Console.WriteLine("0 - Salir");
         }
 
-        static void ListarClientes()
+        static void ListarClientes() // Método para listar todos los Usuarios tipo Cliente
         {
             Console.Clear();
             CambioDeColor("LISTADO DE CLIENTES", ConsoleColor.Yellow);
@@ -80,7 +80,7 @@ namespace Consola
             PressToContinue();
         }
 
-        static void ListarArticulosDadaCategoria()
+        static void ListarArticulosDadaCategoria() // Lista Artículos según la categoría ingresada por consola
         {
             Console.Clear();
             CambioDeColor("LISTADO DE ARTICULOS POR CATEGORIA DADA", ConsoleColor.Yellow);
@@ -112,7 +112,7 @@ namespace Consola
             PressToContinue();
         }
 
-        static void AltaArticulo()
+        static void AltaArticulo() // Permite ingresar los datos necesarios para generar un nuevo Artículo y agregarlos a la lista de Artículos
         {
             Console.Clear();
             CambioDeColor("ALTA DE ARTICULO", ConsoleColor.Yellow);
@@ -138,7 +138,7 @@ namespace Consola
 
             PressToContinue();
         }
-        static void ListarPublicacionesEntreFechas()
+        static void ListarPublicacionesEntreFechas() // Se podrá ingresar dos fechas para mostrar una lista de todos las Publicaciones que existen entre ellas
         {
             Console.Clear();
             CambioDeColor("LISTADO DE PUBLICACIONES ENTRE FECHAS DADAS", ConsoleColor.Yellow);

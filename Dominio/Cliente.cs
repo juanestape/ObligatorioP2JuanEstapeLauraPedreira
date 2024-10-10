@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public class Cliente : Usuario
+    public class Cliente : Usuario // Asigna Cliente como hijo de la clase Usuario
     {
         private double _saldo;
 
-        public Cliente(string nombre, string apellido, string email, string contrasenia, double saldo) : base(nombre, apellido, email, contrasenia)
+        public Cliente(string nombre, string apellido, string email, string contrasenia, double saldo) : base(nombre, apellido, email, contrasenia) // Atribuye los valores de los atributos de la clase padre como base y le agrega el atributo propio de Cliente
         {
             _saldo = saldo;
         }

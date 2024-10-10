@@ -54,7 +54,7 @@ namespace Dominio
             if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio.");
         }
 
-        public void AltaArticulo(Articulo a)
+        public void AgregarArticulo(Articulo a) // Método que recibe un Artículo, lo valida y agrega a la lista de Artículos 
         {
             if (a == null) throw new Exception("El artículo no puede ser nulo");
             a.Validar();

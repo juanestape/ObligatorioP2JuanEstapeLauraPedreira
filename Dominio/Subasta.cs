@@ -19,7 +19,7 @@ namespace Dominio
             get { return _ofertas; }
         }
 
-        public void AltaOferta(Oferta o)
+        public void AltaOferta(Oferta o) // Recibe una Oferta, la valida y la agrega al listado de Ofertas
         {
             if (o == null) throw new Exception("La oferta no puede ser nulo");
             o.Validar();

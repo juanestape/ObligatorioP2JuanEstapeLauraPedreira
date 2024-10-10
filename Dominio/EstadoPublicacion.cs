@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public enum EstadoPublicacion
+    public enum EstadoPublicacion // Estructura que guarda los datos opcionales que precisamos que tome el Estado de las Publicaciones
     {
         ABIERTA,
         CERRADA,
