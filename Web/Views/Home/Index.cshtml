@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @if (Context.Session.GetString("email") != null) // Controlo si hay un usuario logueado
+    {
+        <h1 class="display-4">Bienvenido @Context.Session.GetString("email")</h1>
+    }
+    else
+    {
+        <h1 class="display-4">Bienvenido Usuario anónimo</h1>
+    }
+
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

@@ -31,12 +31,25 @@ namespace Dominio
             get { return _id; }
         }
 
+        public string Email
+        {
+            get { return _email; }
+        }
+
+        public string Contrasenia
+        {
+            get { return _contrasenia; }
+        }
+
+
         public void Validar()
         {
             if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio");
             if (string.IsNullOrEmpty(_apellido)) throw new Exception("El apellido no puede ser vacio.");
             if (string.IsNullOrEmpty(_email)) throw new Exception("El email no puede ser vacio.");
-            if (string.IsNullOrEmpty(_contrasenia)) throw new Exception("La contraseña no puede ser vacia.");
+            if (string.IsNullOrEmpty(_contrasenia) || _contrasenia.Length < 8) throw new Exception("La contraseña debe tener al al menos 8 dígitos.");
         }
+
+        public abstract string Rol();
     }
 }

@@ -27,5 +27,10 @@ namespace Dominio
             Cliente c = obj as Cliente;
             return c != null && this._id.Equals(c._id);
         }
+
+        public override string Rol()
+        {
+            return "Cliente";
+        }
     }
 }

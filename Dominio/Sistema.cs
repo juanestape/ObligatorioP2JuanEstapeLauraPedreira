@@ -9,10 +9,12 @@ namespace Dominio
 {
     public class Sistema
     {
+        private static Sistema s_instancia; // Primer paso Singleton para no permitir crear más de una instancia de sistema
+
         public List<Articulo> _articulos = new List<Articulo>();
         public List<Publicacion> _publicaciones = new List<Publicacion>();
         public List<Usuario> _usuarios = new List<Usuario>();
-        public Sistema() // Se invocan los métodos de precarga para que el Sistema inicie con datos
+        private Sistema() // Se invocan los métodos de precarga para que el Sistema inicie con datos // Segundo paso Singleton: hacer privado el contructor de sistema
         {
             PrecargarArticulos();
             PrecargarUsuarios();
@@ -28,6 +30,16 @@ namespace Dominio
                 _usuarios.Add(usuario);
             }
         }
+
+        public static Sistema Instancia // Tercer paso Singleton: hacer la property estática del atributo. Entonces si el atributo es nulo, genero un nuevo objeto de tipo Sistema, y siempre retorno ese objeto guardado en el atributo
+        {
+            get
+            {
+                if (s_instancia == null) s_instancia = new Sistema();
+                return s_instancia;
+            }
+        }
+
 
         private void PrecargarUsuarios() // Utiliza el métdo AltaUsuarios para crear un nuevo Usuario tipo Administrador o Cliente
         {
@@ -348,6 +360,18 @@ namespace Dominio
                 if (p.Fecha.Date >= fecha1 && p.Fecha.Date <= fecha2) publicaciones.Add(p);
             }
             return publicaciones;
+        }
+
+        public Usuario Login(string email, string contrasena) // Método Login para los dos tipos de Usuarios
+        {
+            Usuario usuarioBuscado = null;
+            int i = 0;
+            while (usuarioBuscado == null && i < _usuarios.Count) 
+            {
+                if (_usuarios[i].Email == email && _usuarios[i].Contrasenia == contrasena) usuarioBuscado = _usuarios[i]; // Busco en la lista de Usuarios el que coincida con el email y contrasena que viene por parametro
+                i++;
+            }
+            return usuarioBuscado;
         }
     }
 }

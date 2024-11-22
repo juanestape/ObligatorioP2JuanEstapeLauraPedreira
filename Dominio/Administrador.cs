@@ -12,5 +12,9 @@ namespace Dominio
         {
         }
 
+        public override string Rol()
+        {
+            return "Administrador";
+        }
     }
 }
