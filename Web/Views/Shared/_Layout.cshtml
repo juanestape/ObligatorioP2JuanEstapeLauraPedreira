@@ -30,13 +30,15 @@
                         {
                             @if (Context.Session.GetString("rol") == "Administrador") // Vistas adicionales para Usuario tipo Administrador
                             {
-                                // Subastas
+                                // Listado de Subastas
 
                             }
 
                             @if (Context.Session.GetString("rol") == "Cliente") // Vistas adicionales para Usuario tipo Cliente
                             {
-                                // Publicaciones
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Publicaciones" asp-action="Listado">Listado de Publicaciones</a>
+                                </li>
                                 // Billetera Electrónica
                             }
 
@@ -46,6 +48,9 @@
                         }
                         else
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Registro">Registrarse</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar Sesión</a>
                             </li>

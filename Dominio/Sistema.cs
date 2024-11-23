@@ -22,6 +22,12 @@ namespace Dominio
             PrecargarArticuloAPublicacion();
             PrecargarOfertasASubastas();
         }
+
+        public List<Publicacion> Publicaciones
+        {
+            get { return _publicaciones; }
+        }
+
         public void AltaUsuarios(Usuario usuario)
         {
             {

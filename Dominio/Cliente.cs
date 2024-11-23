@@ -15,6 +15,16 @@ namespace Dominio
             _saldo = saldo;
         }
 
+        public Cliente() : base() // Constructor sin parámetros para el model binding
+        {
+        }
+
+        public double Saldo
+        {
+            get { return _saldo; }
+            set { _saldo = value; }
+        }
+
         public override string ToString()
         {
             string retorno = $"Nombre: {_nombre} - Apellido: {_apellido} - Email: {_email} - Saldo: {_saldo}";

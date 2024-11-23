@@ -26,19 +26,38 @@ namespace Dominio
             _contrasenia = contrasenia;
         }
 
+        public Usuario() // Constructor vacío de parámetro para el model binding
+        {
+            _id = s_idUlt;
+            s_idUlt++;
+        }
+
         public int Id
         {
             get { return _id; }
         }
 
+        public string Nombre
+        { 
+            get { return _nombre; }
+            set { _nombre = value; }
+        }
+
+        public string Apellido
+        {
+            get { return _apellido; }
+            set { _apellido = value; }
+        }
         public string Email
         {
             get { return _email; }
+            set { _email = value; }
         }
 
         public string Contrasenia
         {
             get { return _contrasenia; }
+            set { _contrasenia = value; }
         }
 
 
