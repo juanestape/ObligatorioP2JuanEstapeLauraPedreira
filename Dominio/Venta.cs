@@ -14,6 +14,11 @@ namespace Dominio
         {
             _ofertaR = ofertaR;
         }
+
+        public override string TipoPublicacion()
+        {
+            return "Venta";
+        }
     }
 }
 

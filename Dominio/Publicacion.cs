@@ -66,5 +66,7 @@ namespace Dominio
 
             return retorno;
         }
+
+        public abstract string TipoPublicacion();
     }
 }

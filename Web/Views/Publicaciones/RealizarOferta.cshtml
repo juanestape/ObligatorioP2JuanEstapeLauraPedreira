@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "RealizarOferta";
+}
+
+<h1>Realizar Oferta en la Subasta</h1>
+
+<form method="post" action="/publicaciones/RealizarOferta">
+    <label>Oferta Nueva</label>
+    <input type="number" placeholder="Ingrese oferta" name="nuevaOferta" />
+
+    <input type="number" value="@ViewBag.Id" name="id" hidden/> 
+
+    <input type="submit" class="btn btn-success" value="Cambiar"/>
+</form>

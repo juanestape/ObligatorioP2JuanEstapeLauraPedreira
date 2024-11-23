@@ -374,7 +374,7 @@ namespace Dominio
             int i = 0;
             while (usuarioBuscado == null && i < _usuarios.Count) 
             {
-                if (_usuarios[i].Email == email && _usuarios[i].Contrasenia == contrasena) usuarioBuscado = _usuarios[i]; // Busco en la lista de Usuarios el que coincida con el email y contrasena que viene por parametro
+                if (_usuarios[i].Email == email && _usuarios[i].Contrasenia == contrasena) usuarioBuscado = _usuarios[i]; // Busco en la lista de Usuarios el que coincida con el email y contraseña que viene por parametro
                 i++;
             }
             return usuarioBuscado;

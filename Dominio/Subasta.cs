@@ -26,5 +26,10 @@ namespace Dominio
             if (_ofertas.Count > 0 && o.Monto <= this._ofertas[this._ofertas.Count - 1].Monto) throw new Exception("La oferta debe ser mayor a la oferta mas alta");
             _ofertas.Add(o);
         }
+
+        public override string TipoPublicacion()
+        {
+            return "Subasta";
+        }
     }
 }
