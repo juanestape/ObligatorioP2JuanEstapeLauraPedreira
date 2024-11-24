@@ -44,7 +44,7 @@ else
                     {
                         @if (p.TipoPublicacion() == "Venta")
                         {
-                            <td><input type="submit" class="btn btn-primary" value="Comprar" /></td>
+                            <td><a href="/publicaciones/RealizarOferta?id=@p.Id">Comprar</a></td>
                         }
                         @if (p.TipoPublicacion() == "Subasta")
                         {

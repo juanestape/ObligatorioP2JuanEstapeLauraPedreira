@@ -137,7 +137,7 @@ namespace Dominio
         private void PrecargarPublicaciones()
         {
             AltaPublicacion(new Venta("Verano en la Playa", EstadoPublicacion.ABIERTA, new DateTime(2024, 09, 15), true));
-            AltaPublicacion(new Venta("Aventura en el Camping", EstadoPublicacion.ABIERTA, new DateTime(2024, 08, 12), false));
+            AltaPublicacion(new Venta("Aventura en el Camping", EstadoPublicacion.CERRADA, new DateTime(2024, 08, 12), false));
             AltaPublicacion(new Venta("Pack de Ciclismo", EstadoPublicacion.ABIERTA, new DateTime(2024, 10, 02), true));
             AltaPublicacion(new Venta("Picnic en el Parque", EstadoPublicacion.ABIERTA, new DateTime(2024, 07, 20), false));
             AltaPublicacion(new Venta("Equipamiento para Tenis", EstadoPublicacion.ABIERTA, new DateTime(2024, 08, 05), false));
@@ -312,15 +312,15 @@ namespace Dominio
         public void AgregaroOfertaASubasta(int idSubasta, int idCliente, double monto, DateTime fecha) // Método para agregar una oferta a una subasta
         {
             Subasta subastaBuscada = ObtenerSubastaPorId(idSubasta);
-            if (subastaBuscada == null) throw new Exception("No se encontro subasta con ese Id");
+            if (subastaBuscada == null) throw new Exception($"No se encontro subasta con ese Id: {idSubasta}");
             Usuario clienteBuscado = ObtenerUsuarioPorId(idCliente);
-            if (clienteBuscado == null) throw new Exception("No se encontro cliente con ese Id");
+            if (clienteBuscado == null) throw new Exception($"No se encontro cliente con ese Id: {idCliente}");
             bool tieneOferta = false;
             foreach (Oferta a in subastaBuscada.Oferta)
             {
                 if (a.Cliente.Equals(clienteBuscado)) tieneOferta = true;
             }
-            if (tieneOferta) throw new Exception("Este cliente ya realizo una oferta");
+            if (tieneOferta) throw new Exception($"El cliente {clienteBuscado.Email} ya realizo una oferta");
             Oferta o = new Oferta(clienteBuscado, monto, fecha);
             subastaBuscada.AltaOferta(o);
         }
@@ -378,6 +378,18 @@ namespace Dominio
                 i++;
             }
             return usuarioBuscado;
+        }
+
+        public int ObtenerIdUsuarioPorEmail(string email) // Método para obtener el id del usuario logueado usando el email que guardamos en la session
+        {
+            int idBuscado = 0;
+            int i = 0;
+            while (idBuscado <= 0 && i < _usuarios.Count)
+            {
+                if (_usuarios[i].Email == email) idBuscado = _usuarios[i].Id;
+                i++;
+            }
+            return idBuscado;
         }
     }
 }

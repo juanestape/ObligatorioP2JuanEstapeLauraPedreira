@@ -45,7 +45,9 @@ namespace Web.Controllers
             {
                 if (id < 0) throw new Exception("El Id de la Publicación no es válido");
                 if (nuevaOferta < 0) throw new Exception("La Nueva Oferta no puede ser negativa");
-                miSistema.AltaOferta(); // FALTA PASARLE LA NUEVA OFERTA
+
+                int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
+                miSistema.AgregaroOfertaASubasta(id, idUsuario, nuevaOferta, DateTime.Now);
                 TempData["Exito"] = $"Se aceptó la nueva oferta: ${nuevaOferta}";
             }
             catch (Exception ex)
