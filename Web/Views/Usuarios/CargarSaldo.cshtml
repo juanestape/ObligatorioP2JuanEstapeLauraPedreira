@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "CargarSaldo";
+}
+
+<h1>Billetera Electrónica</h1>
+
+<br />
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@if (ViewBag.Exito != null)
+{
+    <div class="alert alert-success">@ViewBag.Exito</div>
+}
+
+<br />
+
+<form method="post" action="/usuarios/CargarSaldo">
+    <label>Cargar Saldo</label>
+    <input type="number" placeholder="Ingrese valor" name="nuevoValor" />
+
+    <input type="number" value="@ViewBag.Id" name="id" hidden />
+
+    <input type="submit" class="btn btn-success" value="Cargar" />
+</form>

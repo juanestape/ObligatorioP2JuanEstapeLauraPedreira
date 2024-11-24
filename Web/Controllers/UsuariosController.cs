@@ -69,9 +69,39 @@ namespace Web.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult CargarSaldo() 
+        {
+            if (HttpContext.Session.GetString("rol") == null || HttpContext.Session.GetString("rol") != "Cliente") // Condicional para que sólo pueda entrar a la url el usuario logueado con el rol que corresponde
+            {
+                return View("NoAutorizado");
+            }
 
+            return View();
+        }
 
-        // Método para que el usuario cliente pueda Cargar saldo en su billetera electrónica
-        // Agregarle condicional para rol y que muestre esta vista sólo para cliente, si no está autorizado va a otra vista de no autorizado en carpeta shared.
+        [HttpPost]
+        public IActionResult CargarSaldo(double nuevoValor) // Método para que el usuario cliente pueda Cargar saldo en su billetera electrónica
+        {
+            if (HttpContext.Session.GetString("rol") == null || HttpContext.Session.GetString("rol") != "Cliente") 
+            {
+                return View("NoAutorizado");
+            }
+
+            try
+            {
+                if (nuevoValor <= 0) throw new Exception("La carga no puede ser negativa, ni 0");
+                int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
+                miSistema.CambiarSaldoDeCliente(idUsuario, nuevoValor);
+                ViewBag.Exito = $"Se agregó correctamente ${nuevoValor} al saldo";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+
+            return View();
+        }
+
     }
 }

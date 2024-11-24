@@ -5,6 +5,15 @@
 
 <h1>Realizar Oferta en la Subasta</h1>
 
+<br />
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<br />
+
 <form method="post" action="/publicaciones/RealizarOferta">
     <label>Oferta Nueva</label>
     <input type="number" placeholder="Ingrese oferta" name="nuevaOferta" />

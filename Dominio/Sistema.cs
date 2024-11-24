@@ -153,7 +153,7 @@ namespace Dominio
             AltaPublicacion(new Subasta("Tenis Avanzado", EstadoPublicacion.ABIERTA, new DateTime(2024, 09, 26)));
             AltaPublicacion(new Subasta("Ciclista", EstadoPublicacion.ABIERTA, new DateTime(2024, 08, 15)));
             AltaPublicacion(new Subasta("Día de Playa Completo", EstadoPublicacion.ABIERTA, new DateTime(2024, 07, 05)));
-            AltaPublicacion(new Subasta("Kit de Supervivencia", EstadoPublicacion.ABIERTA, new DateTime(2024, 08, 01)));
+            AltaPublicacion(new Subasta("Kit de Supervivencia", EstadoPublicacion.CERRADA, new DateTime(2024, 08, 01)));
             AltaPublicacion(new Subasta("Deportes Acuáticos", EstadoPublicacion.ABIERTA, new DateTime(2024, 07, 20)));
             AltaPublicacion(new Subasta("Fitness Completo", EstadoPublicacion.ABIERTA, new DateTime(2024, 06, 28)));
         }
@@ -390,6 +390,13 @@ namespace Dominio
                 i++;
             }
             return idBuscado;
+        }
+
+        public void CambiarSaldoDeCliente(int idCliente, double cantidad) 
+        { 
+            Usuario u = ObtenerUsuarioPorId(idCliente);
+            if (u == null) throw new Exception($"El Cliente {idCliente} no se encontró");
+            //u.CargarSaldo(cantidad);
         }
     }
 }

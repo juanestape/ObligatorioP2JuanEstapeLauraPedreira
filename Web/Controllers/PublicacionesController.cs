@@ -15,8 +15,6 @@ namespace Web.Controllers
                 return View("NoAutorizado");
             }
             if (TempData["Exito"] != null) ViewBag.Exito = TempData["Exito"];
-            if (TempData["Error"] != null) ViewBag.Exito = TempData["Error"];
-
             ViewBag.Listado = miSistema.Publicaciones; // Guardo en la ViewBag la lista de Publicaciones que tiene el sistema
             return View();
         }
@@ -44,17 +42,20 @@ namespace Web.Controllers
             try
             {
                 if (id < 0) throw new Exception("El Id de la Publicación no es válido");
-                if (nuevaOferta < 0) throw new Exception("La Nueva Oferta no puede ser negativa");
+                if (nuevaOferta <= 0) throw new Exception("La nueva oferta no puede ser negativa, ni 0");
 
                 int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
                 miSistema.AgregaroOfertaASubasta(id, idUsuario, nuevaOferta, DateTime.Now);
                 TempData["Exito"] = $"Se aceptó la nueva oferta: ${nuevaOferta}";
+                return RedirectToAction("Listado");
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
+                ViewBag.Error = ex.Message;
+                ViewBag.Id = id;
+                return View();
             }
-            return RedirectToAction("Listado");
+            
         }
     }
 }

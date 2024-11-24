@@ -42,5 +42,11 @@ namespace Dominio
         {
             return "Cliente";
         }
+
+        public void CargarSaldo(double cantidad )
+        {
+            if (cantidad <= 0) throw new Exception("El valor debe ser mayor a 0");
+            _saldo += cantidad;
+        }
     }
 }
