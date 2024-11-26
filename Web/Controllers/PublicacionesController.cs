@@ -77,5 +77,18 @@ namespace Web.Controllers
 
             return RedirectToAction("Listado");
         }
+
+
+        [HttpGet]
+        public IActionResult ListadoSubastas()
+        {
+            if (HttpContext.Session.GetString("rol") == null || HttpContext.Session.GetString("rol") != "Administrador")
+            {
+                return View("NoAutorizado");
+            }
+            //FALTA ORDENAR LA LISTA POR FECHA DE PUBLICACIÓN
+            ViewBag.Listado = miSistema.Publicaciones;
+            return View();
+        }
     }
 }

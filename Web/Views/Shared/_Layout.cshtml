@@ -30,7 +30,9 @@
                         {
                             @if (Context.Session.GetString("rol") == "Administrador") // Vistas adicionales para Usuario tipo Administrador
                             {
-                                // Listado de Subastas
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Publicaciones" asp-action="ListadoSubastas">Listado de Subastas</a>
+                                </li>
 
                             }
 
