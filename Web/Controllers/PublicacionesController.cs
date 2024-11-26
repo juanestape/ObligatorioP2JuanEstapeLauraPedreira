@@ -86,8 +86,7 @@ namespace Web.Controllers
             {
                 return View("NoAutorizado");
             }
-            //FALTA ORDENAR LA LISTA POR FECHA DE PUBLICACIÓN
-            ViewBag.Listado = miSistema.Publicaciones;
+            ViewBag.Listado = miSistema.PublicacionesOrdenadasPorFecha();
             return View();
         }
     }

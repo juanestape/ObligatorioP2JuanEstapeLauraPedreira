@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Dominio
 {
-    public abstract class Publicacion : IValidable
+    public abstract class Publicacion : IValidable, IComparable<Publicacion> // Le implementamos a Publicación el método CompareTo, agregando la interface IComparable
     {
         protected int _id;
         protected static int s_idUlt = 1;
@@ -73,5 +73,10 @@ namespace Dominio
         public abstract double CalcularPrecio();
 
         public abstract void Cerrar(Usuario usuarioFinaliza);
+
+        public int CompareTo(Publicacion? other) // Usamos el método CompareTo que me obliga usar el IComparable. Recibe por parámetro el segundo objeto a comparar
+        {
+            return _fechaPublicacion.CompareTo(other._fechaPublicacion); // Le paso el primer objeto que quiero comparar con el segundo a comparar
+        }
     }
 }

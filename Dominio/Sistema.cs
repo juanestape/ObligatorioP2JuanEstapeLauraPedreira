@@ -440,5 +440,11 @@ namespace Dominio
             Venta v = ObtenerVentaPorId(idPublicacion);
             v.Cerrar(u);
         }
+
+        public List<Publicacion> PublicacionesOrdenadasPorFecha()
+        {
+            _publicaciones.Sort(); // Invocamos el método sort para ordenar. En este caso al ser un objeto tengo que decirle a través del método ComparteTo que usa por detrás, cual es la forma que quiero usar para ordenar
+            return _publicaciones;
+        }
     }
 }
