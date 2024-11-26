@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dominio
 {
@@ -392,11 +393,52 @@ namespace Dominio
             return idBuscado;
         }
 
+        public Cliente ObtenerClientePorId(int id)
+        {
+            Cliente buscado = null;
+            int i = 0;
+            while (i < _usuarios.Count && buscado == null)
+            {
+                if (_usuarios[i].Id == id && _usuarios[i] is Cliente) buscado = _usuarios[i] as Cliente;
+                i++;
+            }
+            return buscado;
+        }
+
+        public Venta ObtenerVentaPorId(int id)
+        {
+            Venta buscada = null;
+            int i = 0;
+            while (i < _publicaciones.Count && buscada == null)
+            {
+                if (_publicaciones[i].Id == id && _publicaciones[i] is Venta) buscada = _publicaciones[i] as Venta;
+                i++;
+            }
+            return buscada;
+        }
+
         public void CambiarSaldoDeCliente(int idCliente, double cantidad) 
         { 
-            Usuario u = ObtenerUsuarioPorId(idCliente);
-            if (u == null) throw new Exception($"El Cliente {idCliente} no se encontró");
-            //u.CargarSaldo(cantidad);
+            Cliente c = ObtenerClientePorId(idCliente);
+            if (c == null) throw new Exception($"El Cliente {idCliente} no se encontró");
+            c.CargarSaldo(cantidad);
+        }
+        public bool SaldoActual(int idUsuario, int idPublicacion )
+        {
+            bool tieneSaldo = false;
+            Cliente c = ObtenerClientePorId(idUsuario);
+            Venta v = ObtenerVentaPorId(idPublicacion);
+            if (c == null) throw new Exception($"No se encontró el Cliente con el Id {idUsuario}");
+            //if (c.Saldo >= v.CalcularPrecio()) tieneSaldo = true;
+            return tieneSaldo;
+        }
+
+        public void CerrarPublicacion(int idUsuario, int idPublicacion)
+        {
+            // preguntar si reutilizamos con idusuario para ambos usuarios
+            Usuario u = ObtenerUsuarioPorId(idUsuario);
+            Venta v = ObtenerVentaPorId(idPublicacion);
+            v.Cerrar(u);
         }
     }
 }

@@ -19,6 +19,21 @@ namespace Dominio
         {
             return "Venta";
         }
+
+        public override double CalcularPrecio()
+        {
+            return 10;
+        }
+        public override void Cerrar(Usuario usuarioFinaliza)
+        {
+            Cliente clienteFinaliza = usuarioFinaliza as Cliente;
+
+            _estado = EstadoPublicacion.CERRADA;
+            _clienteCompra = clienteFinaliza;
+            _usuarioFinaliza = clienteFinaliza;
+            _fechaFin = DateTime.Now;
+            //clienteFinaliza.Saldo -= this.CalcularPrecio();
+        }
     }
 }
 

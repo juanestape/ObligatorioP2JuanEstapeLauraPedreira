@@ -31,5 +31,22 @@ namespace Dominio
         {
             return "Subasta";
         }
+
+        public override double CalcularPrecio()
+        {
+            return 10;
+        }
+
+        public override void Cerrar(Usuario usuarioFinaliza)
+        {
+            //HACER LÓGICA PARA SUBASTA
+            //Cliente clienteFinaliza = usuarioFinaliza as Cliente;
+
+            //_estado = EstadoPublicacion.CERRADA;
+            //_clienteCompra = clienteFinaliza;
+            //_usuarioFinaliza = clienteFinaliza;
+            //_fechaFin = DateTime.Now;
+            //clienteFinaliza.Saldo -= this.CalcularPrecio();
+        }
     }
 }

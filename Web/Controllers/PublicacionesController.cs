@@ -54,8 +54,28 @@ namespace Web.Controllers
                 ViewBag.Error = ex.Message;
                 ViewBag.Id = id;
                 return View();
+            }   
+        }
+
+        public IActionResult FinalizarPublicacion(int idPublicacion )
+        {
+            try
+            {
+                if (idPublicacion < 0) throw new Exception("El Id de la Publicación no es válido");
+                int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
+
+                if (miSistema.SaldoActual(idUsuario, idPublicacion))
+                {
+                    ViewBag.Exito = "La compra se realizó";
+                    miSistema.CerrarPublicacion(idUsuario, idPublicacion);
+                }
             }
-            
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+
+            return RedirectToAction("Listado");
         }
     }
 }

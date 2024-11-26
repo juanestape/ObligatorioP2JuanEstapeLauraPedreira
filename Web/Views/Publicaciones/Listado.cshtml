@@ -39,7 +39,7 @@ else
                     {
                         @if (p.TipoPublicacion() == "Venta")
                         {
-                            <td><a href="/publicaciones/RealizarOferta?id=@p.Id">Comprar</a></td>
+                            <td><a href="/publicaciones/FinalizarPublicacion?id=@p.Id">Comprar</a></td>
                         }
                         @if (p.TipoPublicacion() == "Subasta")
                         {
@@ -47,7 +47,7 @@ else
                         }
                     } else
                     {
-                    <td></td>    
+                    <td></td>
                     }
 
                 </tr>

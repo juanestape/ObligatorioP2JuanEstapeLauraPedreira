@@ -37,6 +37,7 @@ namespace Dominio
         public EstadoPublicacion Estado
         {
             get { return _estado; }
+            set { _estado = value; }
         }
 
         public DateTime Fecha
@@ -68,5 +69,9 @@ namespace Dominio
         }
 
         public abstract string TipoPublicacion();
+
+        public abstract double CalcularPrecio();
+
+        public abstract void Cerrar(Usuario usuarioFinaliza);
     }
 }
