@@ -13,6 +13,16 @@
     <div class="alert alert-success">@ViewBag.Exito</div>
 }
 
+@if (ViewBag.ExitoCompra != null)
+{
+    <div class="alert alert-success">@ViewBag.ExitoCompra</div>
+}
+
+@if (ViewBag.ErrorCompra != null)
+{
+    <div class="alert alert-success">@ViewBag.ErrorCompra</div>
+}
+
 @if (ViewBag.Listado == null || ViewBag.Listado.Count == 0)
 {
     <div class="alert alert-danger">No hay Publicaciones en el sistema</div>

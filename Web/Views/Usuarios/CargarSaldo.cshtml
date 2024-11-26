@@ -28,5 +28,10 @@
     <input type="submit" class="btn btn-success" value="Cargar" />
 
     <br />
-    <label>Su saldo actual es: @ViewBag.Saldo</label>
+
+    @if (ViewBag.Saldo != null)
+    {
+        <label>Su saldo actual es: @ViewBag.Saldo</label>
+    }
+
 </form>

@@ -16,6 +16,12 @@ namespace Web.Controllers
             }
             if (TempData["Exito"] != null) ViewBag.Exito = TempData["Exito"];
             ViewBag.Listado = miSistema.Publicaciones; // Guardo en la ViewBag la lista de Publicaciones que tiene el sistema
+
+            if (TempData["ExitoCompra"] != null) ViewBag.ExitoCompra = TempData["ExitoCompra"];
+            ViewBag.Listado = miSistema.Publicaciones;
+
+            if (TempData["ErrorCompra"] != null) ViewBag.ErrorCompra = TempData["ErrorCompra"];
+            ViewBag.Listado = miSistema.Publicaciones;
             return View();
         }
 
@@ -66,13 +72,13 @@ namespace Web.Controllers
 
                 if (miSistema.TieneSaldoActual(idUsuario, idPublicacion))
                 {
-                    ViewBag.Exito = "La compra se realizó";
+                    TempData["ExitoCompra"] = "La compra se realizó";
                     miSistema.CerrarPublicacion(idUsuario, idPublicacion);
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
+                TempData["ErrorCompra"] = ex.Message;
             }
 
             return RedirectToAction("Listado");
