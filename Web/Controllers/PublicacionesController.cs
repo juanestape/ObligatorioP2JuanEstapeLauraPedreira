@@ -64,7 +64,7 @@ namespace Web.Controllers
                 if (idPublicacion < 0) throw new Exception("El Id de la Publicación no es válido");
                 int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
 
-                if (miSistema.SaldoActual(idUsuario, idPublicacion))
+                if (miSistema.TieneSaldoActual(idUsuario, idPublicacion))
                 {
                     ViewBag.Exito = "La compra se realizó";
                     miSistema.CerrarPublicacion(idUsuario, idPublicacion);

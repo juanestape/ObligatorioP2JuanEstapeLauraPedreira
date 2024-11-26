@@ -1,4 +1,4 @@
-﻿
+﻿@using Dominio
 @{
     ViewData["Title"] = "CargarSaldo";
 }
@@ -26,4 +26,7 @@
     <input type="number" value="@ViewBag.Id" name="id" hidden />
 
     <input type="submit" class="btn btn-success" value="Cargar" />
+
+    <br />
+    <label>Su saldo actual es: @ViewBag.Saldo</label>
 </form>

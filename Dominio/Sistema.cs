@@ -423,7 +423,7 @@ namespace Dominio
             if (c == null) throw new Exception($"El Cliente {idCliente} no se encontró");
             c.CargarSaldo(cantidad);
         }
-        public bool SaldoActual(int idUsuario, int idPublicacion )
+        public bool TieneSaldoActual(int idUsuario, int idPublicacion )
         {
             bool tieneSaldo = false;
             Cliente c = ObtenerClientePorId(idUsuario);
@@ -445,6 +445,12 @@ namespace Dominio
         {
             _publicaciones.Sort(); // Invocamos el método sort para ordenar. En este caso al ser un objeto tengo que decirle a través del método ComparteTo que usa por detrás, cual es la forma que quiero usar para ordenar
             return _publicaciones;
+        }
+
+        public double SaldoActual(int idUsuario)
+        {
+            Cliente c = ObtenerClientePorId(idUsuario);
+            return c.Saldo;
         }
     }
 }

@@ -93,7 +93,11 @@ namespace Web.Controllers
                 if (nuevoValor <= 0) throw new Exception("La carga no puede ser negativa, ni 0");
                 int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
                 miSistema.CambiarSaldoDeCliente(idUsuario, nuevoValor);
-                ViewBag.Exito = $"Se agregó correctamente ${nuevoValor} al saldo";
+
+                Usuario usuario = miSistema.ObtenerUsuarioPorId(idUsuario);
+                double saldoCliente = miSistema.SaldoActual(idUsuario);
+                ViewBag.Saldo = saldoCliente;
+                ViewBag.Exito = $"Se agregó correctamente ${nuevoValor} al saldo de {usuario.Nombre}";
             }
             catch (Exception ex)
             {
