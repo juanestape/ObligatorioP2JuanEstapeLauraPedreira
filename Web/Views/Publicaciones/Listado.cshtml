@@ -44,16 +44,16 @@ else
                 <tr>
                     <td>@p.Nombre</td>
                     <td>@p.Estado</td>
-                    <td>Precio (hacer método)</td>
+                    <td>@p.CalcularTotalPrecio()</td>
                     @if (@p.Estado == EstadoPublicacion.ABIERTA)
                     {
                         @if (p.TipoPublicacion() == "Venta")
                         {
-                            <td><a href="/publicaciones/FinalizarPublicacion?id=@p.Id">Comprar</a></td>
+                            <td><a href="/publicaciones/FinalizarPublicacion/@p.Id" class="btn btn-primary">Comprar</a></td>
                         }
                         @if (p.TipoPublicacion() == "Subasta")
                         {
-                            <td><a href="/publicaciones/RealizarOferta?id=@p.Id">Realizar Oferta</a></td>
+                            <td><a href="/publicaciones/RealizarOferta?id=@p.Id" class="btn btn-primary">Realizar Oferta</a></td>
                         }
                     } else
                     {

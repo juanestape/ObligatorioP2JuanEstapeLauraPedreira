@@ -195,10 +195,10 @@ namespace Dominio
 
         private void PrecargarArticuloAPublicacion()
         {
+            AgregarArticuloAPublicacion(1, 1);
             AgregarArticuloAPublicacion(1, 2);
             AgregarArticuloAPublicacion(1, 3);
-            AgregarArticuloAPublicacion(1, 9);
-            AgregarArticuloAPublicacion(1, 34);
+            AgregarArticuloAPublicacion(1, 4);
 
             AgregarArticuloAPublicacion(2, 21);
             AgregarArticuloAPublicacion(2, 20);
@@ -423,13 +423,18 @@ namespace Dominio
             if (c == null) throw new Exception($"El Cliente {idCliente} no se encontró");
             c.CargarSaldo(cantidad);
         }
+
         public bool TieneSaldoActual(int idUsuario, int idPublicacion )
         {
             bool tieneSaldo = false;
             Cliente c = ObtenerClientePorId(idUsuario);
             Venta v = ObtenerVentaPorId(idPublicacion);
+
+            Publicacion p = ObtenerPublicacionPorId(idPublicacion);
             if (c == null) throw new Exception($"No se encontró el Cliente con el Id {idUsuario}");
-            //if (c.Saldo >= v.CalcularPrecio()) tieneSaldo = true;
+
+            double precio = p.CalcularTotalPrecio();
+            if (c.Saldo >= precio) tieneSaldo = true;
             return tieneSaldo;
         }
 

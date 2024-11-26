@@ -15,13 +15,10 @@ namespace Web.Controllers
                 return View("NoAutorizado");
             }
             if (TempData["Exito"] != null) ViewBag.Exito = TempData["Exito"];
-            ViewBag.Listado = miSistema.Publicaciones; // Guardo en la ViewBag la lista de Publicaciones que tiene el sistema
-
             if (TempData["ExitoCompra"] != null) ViewBag.ExitoCompra = TempData["ExitoCompra"];
-            ViewBag.Listado = miSistema.Publicaciones;
-
             if (TempData["ErrorCompra"] != null) ViewBag.ErrorCompra = TempData["ErrorCompra"];
-            ViewBag.Listado = miSistema.Publicaciones;
+
+            ViewBag.Listado = miSistema.Publicaciones; // Guardo en la ViewBag la lista de Publicaciones que tiene el sistema
             return View();
         }
 
@@ -60,27 +57,25 @@ namespace Web.Controllers
                 ViewBag.Error = ex.Message;
                 ViewBag.Id = id;
                 return View();
-            }   
+            }
         }
 
-        public IActionResult FinalizarPublicacion(int idPublicacion )
+        public IActionResult FinalizarPublicacion(int id)
         {
             try
             {
-                if (idPublicacion < 0) throw new Exception("El Id de la Publicación no es válido");
+                if (id < 0) throw new Exception("El Id de la Publicación no es válido");
                 int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
+                if (miSistema.TieneSaldoActual(idUsuario, id) == false) throw new Exception("El cliente no tiene saldo suficiente");
 
-                if (miSistema.TieneSaldoActual(idUsuario, idPublicacion))
-                {
-                    TempData["ExitoCompra"] = "La compra se realizó";
-                    miSistema.CerrarPublicacion(idUsuario, idPublicacion);
-                }
+                TempData["ExitoCompra"] = "La compra se realizó";
+                miSistema.CerrarPublicacion(idUsuario, id);
             }
             catch (Exception ex)
             {
                 TempData["ErrorCompra"] = ex.Message;
-            }
 
+            }
             return RedirectToAction("Listado");
         }
 

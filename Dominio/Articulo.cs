@@ -34,6 +34,11 @@ namespace Dominio
             get { return _id; }
         }
 
+        public double PrecioVenta
+        {
+            get { return _precioVenta; }
+        }
+
         public void Validar() // Método para realizar las validaciones necesarias según los datos solicitados
         {
             if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio.");

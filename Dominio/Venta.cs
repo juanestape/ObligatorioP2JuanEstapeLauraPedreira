@@ -22,7 +22,9 @@ namespace Dominio
 
         public override double CalcularPrecio()
         {
-            return 10;
+            double descuento = 0;
+            if (_ofertaR) descuento = 20;
+            return descuento;
         }
         public override void Cerrar(Usuario usuarioFinaliza)
         {

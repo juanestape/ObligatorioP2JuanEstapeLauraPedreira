@@ -1,5 +1,6 @@
 ﻿using Dominio.Interfases;
 using System.Linq;
+using System.Security.Principal;
 
 namespace Dominio
 {
@@ -71,6 +72,20 @@ namespace Dominio
         public abstract string TipoPublicacion();
 
         public abstract double CalcularPrecio();
+
+        public double CalcularTotalPrecio() 
+        {
+            double total = 0;
+            foreach (Articulo a in _articulos) 
+            {
+                total += a.PrecioVenta;
+            }
+
+            double descuento = this.CalcularPrecio();
+            total += descuento;
+
+            return total;
+        }
 
         public abstract void Cerrar(Usuario usuarioFinaliza);
 
