@@ -35,10 +35,10 @@ namespace Dominio
         public override double CalcularPrecio()
         {
             double precio = 0;
-            if (_ofertas.Count > 0) 
-            { 
-                precio = this._ofertas[this._ofertas.Count - 1].Monto; 
-            } 
+            if (_ofertas.Count > 0)
+            {
+                precio = this._ofertas[this._ofertas.Count - 1].Monto;
+            }
 
             return precio;
         }
@@ -48,18 +48,25 @@ namespace Dominio
             Administrador administradorFinaliza = usuarioFinaliza as Administrador;
             if (administradorFinaliza == null) throw new Exception("El Usuario no es válido");
 
-            for (int i = _ofertas.Count -1; i >= 0; i--)
+            bool clienteBuscado = false;
+
+            for (int i = _ofertas.Count - 1; i >= 0; i--)
             {
                 Oferta o = _ofertas[i];
                 if (o.Cliente.Saldo >= o.Monto)
                 {
                     _clienteCompra = o.Cliente;
                     o.Cliente.Saldo -= o.Monto;
+                    _estado = EstadoPublicacion.CERRADA;
+                    clienteBuscado = true;
                     break;
                 }
             }
 
-            _estado = EstadoPublicacion.CERRADA;
+            if (clienteBuscado == false)
+            {
+                _estado = EstadoPublicacion.CANCELADA;
+            }
             _usuarioFinaliza = administradorFinaliza;
             _fechaFin = DateTime.Now;
         }

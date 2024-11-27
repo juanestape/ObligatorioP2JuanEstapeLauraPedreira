@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "RealizarOferta";
 }
 
@@ -14,12 +13,16 @@
 
 <br />
 
-<form method="post" action="/publicaciones/RealizarOferta">
-    <label>Oferta Nueva</label>
-    <input type="number" placeholder="Ingrese oferta" name="nuevaOferta" />
+<div class="card border-success mb-3 " style="max-width: 24rem;">
+    <div class="card-body ">
+        <form method="post" action="/publicaciones/RealizarOferta">
+            <label class="form-label">Oferta Nueva</label>
+            <input class="form-control" type="number" placeholder="Ingrese oferta" name="nuevaOferta" />
 
-    <input type="number" value="@ViewBag.Id" name="id" hidden/> 
-    <br />
+            <input type="number" value="@ViewBag.Id" name="id" hidden />
+            <br />
 
-    <input type="submit" class="btn btn-success" value="Ofertar"/>
-</form>
+            <input type="submit" class="btn btn-success" value="Ofertar" />
+        </form>
+    </div>
+</div>

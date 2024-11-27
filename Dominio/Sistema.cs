@@ -58,9 +58,9 @@ namespace Dominio
             AltaUsuarios(new Cliente("Laura", "Fernández", "laura.fernandez@mail.com", "LauFer789", 1800));
             AltaUsuarios(new Cliente("Pedro", "Rodríguez", "pedro.rodriguez@mail.com", "PedroRz987", 3200));
             AltaUsuarios(new Cliente("Ana", "Sánchez", "ana.sanchez@mail.com", "AnaSnchz456", 1000));
-            AltaUsuarios(new Cliente("Luis", "Martínez", "luis.martinez@mail.com", "LuisMtz234", 3700));
-            AltaUsuarios(new Cliente("Sofía", "Ramírez", "sofia.ramirez@mail.com", "SofRam123", 2800));
-            AltaUsuarios(new Cliente("Diego", "Torres", "diego.torres@mail.com", "DiegoTor789", 700));
+            AltaUsuarios(new Cliente("Luis", "Martínez", "luis.martinez@mail.com", "LuisMtz234", 100));
+            AltaUsuarios(new Cliente("Sofía", "Ramírez", "sofia.ramirez@mail.com", "SofRam123", 30));
+            AltaUsuarios(new Cliente("Diego", "Torres", "diego.torres@mail.com", "DiegoTor789", 20));
             AltaUsuarios(new Cliente("Valentina", "Morales", "valentina.morales@mail.com", "ValeMor456", 5000));
         }
 
@@ -331,6 +331,8 @@ namespace Dominio
             AgregaroOfertaASubasta(11, 9, 950, new DateTime(2024, 09, 24));
             AgregaroOfertaASubasta(12, 3, 600, new DateTime(2024, 09, 20));
             AgregaroOfertaASubasta(12, 7, 850, new DateTime(2024, 09, 23));
+            AgregaroOfertaASubasta(13, 10, 1200, new DateTime(2024, 09, 20));
+            AgregaroOfertaASubasta(13, 11, 1350, new DateTime(2024, 09, 23));
         }
 
         public List<Usuario> MostrarClientes()
