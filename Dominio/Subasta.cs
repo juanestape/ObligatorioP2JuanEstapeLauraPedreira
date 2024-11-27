@@ -34,19 +34,34 @@ namespace Dominio
 
         public override double CalcularPrecio()
         {
-            return 10;
+            double precio = 0;
+            if (_ofertas.Count > 0) 
+            { 
+                precio = this._ofertas[this._ofertas.Count - 1].Monto; 
+            } 
+
+            return precio;
         }
 
         public override void Cerrar(Usuario usuarioFinaliza)
         {
-            //HACER LÓGICA PARA SUBASTA
-            //Cliente clienteFinaliza = usuarioFinaliza as Cliente;
+            Administrador administradorFinaliza = usuarioFinaliza as Administrador;
+            if (administradorFinaliza == null) throw new Exception("El Usuario no es válido");
 
-            //_estado = EstadoPublicacion.CERRADA;
-            //_clienteCompra = clienteFinaliza;
-            //_usuarioFinaliza = clienteFinaliza;
-            //_fechaFin = DateTime.Now;
-            //clienteFinaliza.Saldo -= this.CalcularPrecio();
+            for (int i = _ofertas.Count -1; i >= 0; i--)
+            {
+                Oferta o = _ofertas[i];
+                if (o.Cliente.Saldo >= o.Monto)
+                {
+                    _clienteCompra = o.Cliente;
+                    o.Cliente.Saldo -= o.Monto;
+                    break;
+                }
+            }
+
+            _estado = EstadoPublicacion.CERRADA;
+            _usuarioFinaliza = administradorFinaliza;
+            _fechaFin = DateTime.Now;
         }
     }
 }

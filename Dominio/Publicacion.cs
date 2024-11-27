@@ -82,7 +82,7 @@ namespace Dominio
             }
 
             double descuento = this.CalcularPrecio();
-            total += descuento;
+            total -= total * descuento / 100;
 
             return total;
         }

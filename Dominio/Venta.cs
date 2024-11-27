@@ -22,19 +22,31 @@ namespace Dominio
 
         public override double CalcularPrecio()
         {
+            double total = 0;
+            foreach (Articulo a in _articulos)
+            {
+                total += a.PrecioVenta;
+            }
             double descuento = 0;
             if (_ofertaR) descuento = 20;
             return descuento;
         }
+
         public override void Cerrar(Usuario usuarioFinaliza)
         {
             Cliente clienteFinaliza = usuarioFinaliza as Cliente;
+            double precio = this.CalcularPrecio();
 
-            _estado = EstadoPublicacion.CERRADA;
-            _clienteCompra = clienteFinaliza;
-            _usuarioFinaliza = clienteFinaliza;
-            _fechaFin = DateTime.Now;
-            //clienteFinaliza.Saldo -= this.CalcularPrecio();
+            if (clienteFinaliza.Saldo >= precio)
+            {
+                if (clienteFinaliza == null) throw new Exception("El Usuario no es válido");
+                _estado = EstadoPublicacion.CERRADA;
+                _clienteCompra = clienteFinaliza;
+                _usuarioFinaliza = clienteFinaliza;
+                _fechaFin = DateTime.Now;
+                clienteFinaliza.Saldo -= precio;
+            }
+            throw new Exception("El Usuario no tiene saldo suficiente");
         }
     }
 }

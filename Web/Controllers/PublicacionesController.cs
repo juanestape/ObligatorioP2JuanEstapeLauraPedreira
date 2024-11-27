@@ -60,15 +60,14 @@ namespace Web.Controllers
             }
         }
 
-        public IActionResult FinalizarPublicacion(int id)
+        public IActionResult FinalizarVenta(int id)
         {
             try
             {
                 if (id < 0) throw new Exception("El Id de la Publicación no es válido");
                 int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
-                if (miSistema.TieneSaldoActual(idUsuario, id) == false) throw new Exception("El cliente no tiene saldo suficiente");
 
-                TempData["ExitoCompra"] = "La compra se realizó";
+                TempData["ExitoCompra"] = "La compra se realizó correctamente";
                 miSistema.CerrarPublicacion(idUsuario, id);
             }
             catch (Exception ex)
@@ -89,6 +88,25 @@ namespace Web.Controllers
             }
             ViewBag.Listado = miSistema.PublicacionesOrdenadasPorFecha();
             return View();
+        }
+
+
+        public IActionResult FinalizarSubasta(int id)
+        {
+            try
+            {
+                if (id < 0) throw new Exception("El Id de la Publicación no es válido");
+                int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
+
+                TempData["ExitoCompra"] = "La compra se realizó correctamente";
+                miSistema.CerrarPublicacion(idUsuario, id);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorCompra"] = ex.Message;
+
+            }
+            return RedirectToAction("ListadoSubastas");
         }
     }
 }

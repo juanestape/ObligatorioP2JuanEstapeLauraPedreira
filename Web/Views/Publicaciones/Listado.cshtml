@@ -1,4 +1,4 @@
-﻿@using Dominio 
+﻿@using Dominio
 
 @{
     ViewData["Title"] = "Listado";
@@ -20,7 +20,7 @@
 
 @if (ViewBag.ErrorCompra != null)
 {
-    <div class="alert alert-success">@ViewBag.ErrorCompra</div>
+    <div class="alert alert-danger">@ViewBag.ErrorCompra</div>
 }
 
 @if (ViewBag.Listado == null || ViewBag.Listado.Count == 0)
@@ -44,20 +44,28 @@ else
                 <tr>
                     <td>@p.Nombre</td>
                     <td>@p.Estado</td>
-                    <td>@p.CalcularTotalPrecio()</td>
+                    @if (p.TipoPublicacion() == "Subasta")
+                    {
+                        <td>@p.CalcularPrecio()</td>
+                    }
+                    @if (p.TipoPublicacion() == "Venta")
+                    {
+                        <td>@p.CalcularTotalPrecio()</td>
+                    }
                     @if (@p.Estado == EstadoPublicacion.ABIERTA)
                     {
                         @if (p.TipoPublicacion() == "Venta")
                         {
-                            <td><a href="/publicaciones/FinalizarPublicacion/@p.Id" class="btn btn-primary">Comprar</a></td>
+                            <td><a href="/publicaciones/FinalizarVenta/@p.Id" class="btn btn-primary">Comprar</a></td>
                         }
                         @if (p.TipoPublicacion() == "Subasta")
                         {
                             <td><a href="/publicaciones/RealizarOferta?id=@p.Id" class="btn btn-primary">Realizar Oferta</a></td>
                         }
-                    } else
+                    }
+                    else
                     {
-                    <td></td>
+                        <td></td>
                     }
 
                 </tr>

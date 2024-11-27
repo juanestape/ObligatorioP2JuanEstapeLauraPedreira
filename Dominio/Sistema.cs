@@ -314,7 +314,7 @@ namespace Dominio
         {
             Subasta subastaBuscada = ObtenerSubastaPorId(idSubasta);
             if (subastaBuscada == null) throw new Exception($"No se encontro subasta con ese Id: {idSubasta}");
-            Usuario clienteBuscado = ObtenerUsuarioPorId(idCliente);
+            Cliente clienteBuscado = ObtenerClientePorId(idCliente);
             if (clienteBuscado == null) throw new Exception($"No se encontro cliente con ese Id: {idCliente}");
             bool tieneOferta = false;
             foreach (Oferta a in subastaBuscada.Oferta)
@@ -424,26 +424,11 @@ namespace Dominio
             c.CargarSaldo(cantidad);
         }
 
-        public bool TieneSaldoActual(int idUsuario, int idPublicacion )
-        {
-            bool tieneSaldo = false;
-            Cliente c = ObtenerClientePorId(idUsuario);
-            Venta v = ObtenerVentaPorId(idPublicacion);
-
-            Publicacion p = ObtenerPublicacionPorId(idPublicacion);
-            if (c == null) throw new Exception($"No se encontró el Cliente con el Id {idUsuario}");
-
-            double precio = p.CalcularTotalPrecio();
-            if (c.Saldo >= precio) tieneSaldo = true;
-            return tieneSaldo;
-        }
-
         public void CerrarPublicacion(int idUsuario, int idPublicacion)
         {
-            // preguntar si reutilizamos con idusuario para ambos usuarios
             Usuario u = ObtenerUsuarioPorId(idUsuario);
-            Venta v = ObtenerVentaPorId(idPublicacion);
-            v.Cerrar(u);
+            Publicacion p = ObtenerPublicacionPorId(idPublicacion);
+            p.Cerrar(u);
         }
 
         public List<Publicacion> PublicacionesOrdenadasPorFecha()
