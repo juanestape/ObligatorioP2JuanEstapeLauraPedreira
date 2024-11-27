@@ -86,6 +86,8 @@ namespace Web.Controllers
             {
                 return View("NoAutorizado");
             }
+            if (TempData["ExitoCompraSubasta"] != null) ViewBag.ExitoCompraSubasta = TempData["ExitoCompraSubasta"];
+            if (TempData["ErrorCompraSubasta"] != null) ViewBag.ErrorCompraSubasta = TempData["ErrorCompraSubasta"];
             ViewBag.Listado = miSistema.PublicacionesOrdenadasPorFecha();
             return View();
         }
@@ -93,20 +95,20 @@ namespace Web.Controllers
 
         public IActionResult FinalizarSubasta(int id)
         {
-            //try
-            //{
-            //    if (id < 0) throw new Exception("El Id de la Publicación no es válido");
-            //    int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
+            try
+            {
+                if (id < 0) throw new Exception("El Id de la Publicación no es válido");
+                int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
 
-            //    TempData["ExitoCompra"] = "La compra se realizó correctamente";
-            //    miSistema.CerrarPublicacion(idUsuario, id);
-            //}
-            //catch (Exception ex)
-            //{
-            //    TempData["ErrorCompra"] = ex.Message;
-
-            //}
-            return RedirectToAction("ListadoSubastas");
+                miSistema.CerrarPublicacion(idUsuario, id);
+                TempData["ExitoCompraSubasta"] = "La subasta se cerró correctamente";
+                return RedirectToAction("ListadoSubastas");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorCompraSubasta"] = ex.Message;
+                return RedirectToAction("ListadoSubastas");
+            }
         }
     }
 }

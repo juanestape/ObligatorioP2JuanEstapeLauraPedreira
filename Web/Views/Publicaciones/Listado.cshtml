@@ -44,7 +44,7 @@ else
                 <tr>
                     <td>@p.Nombre</td>
                     <td>@p.Estado</td>
-                    <td>@p.CalcularPrecio()</td>
+                    <td>$ @p.CalcularPrecio()</td>
                     @if (@p.Estado == EstadoPublicacion.ABIERTA)
                     {
                         @if (p.TipoPublicacion() == "Venta")

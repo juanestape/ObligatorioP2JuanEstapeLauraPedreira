@@ -1,38 +1,37 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Login";
 }
 
 <h1>Login</h1>
-
-@if (ViewBag.Exito != null)
-{
-    <div class="alert alert-success">@ViewBag.Exito</div> 
-}
+<br />
 
 @if (ViewBag.Error != null)
 {
-    <div class="alert alert-danger">@ViewBag.Error</div>
+    <div class="alert alert-danger" style="max-width: 24rem;">@ViewBag.Error</div>
 }
 
 @if (ViewBag.ExitoRegistro != null) // Viene del usuario registrado
 {
-    <div class="alert alert-success">@ViewBag.ExitoRegistro</div>
+    <div class="alert alert-success" style="max-width: 24rem;">@ViewBag.ExitoRegistro</div>
 }
 
 <br />
-<form method="post" action="/usuarios/login">
-    <label>Email</label>
-    <input type="email" placeholder="Ingrese email" name="email"/>
 
-    <br />
-    <br />
+<div class="card border-primary mb-3 " style="max-width: 24rem;">
+    <div class="card-header text-primary">Inicio de Sesión</div>
+    <div class="card-body ">
+        <form method="post" action="/usuarios/login">
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input class="form-control" type="email" placeholder="Ingrese email" name="email" />
+            </div>
+            <div class="form-group">
 
-    <label>Contraseña</label>
-    <input type="password" placeholder="Ingrese contraseña" name="contrasena"/>
-
-    <br />
-    <br />
-
-    <input type="submit" class="btn btn-primary" value="Iniciar Sesión" />
-</form>
+                <label class="form-label">Contraseña</label>
+                <input class="form-control" type="password" placeholder="Ingrese contraseña" name="contrasena" />
+            </div>
+            <br />
+            <input type="submit" class="btn btn-primary" value="Iniciar Sesión" />
+        </form>
+    </div>
+</div>

@@ -24,11 +24,12 @@
     <input type="number" placeholder="Ingrese valor" name="nuevoValor" />
 
     <input type="number" value="@ViewBag.Id" name="id" hidden />
+    <br />
 
     <input type="submit" class="btn btn-success" value="Cargar" />
 
     <br />
-
+    <br />
     @if (ViewBag.Saldo != null)
     {
         <label>Su saldo actual es: @ViewBag.Saldo</label>

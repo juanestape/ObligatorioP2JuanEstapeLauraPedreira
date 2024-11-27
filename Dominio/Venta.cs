@@ -38,7 +38,7 @@ namespace Dominio
             if (clienteFinaliza == null) throw new Exception("El Usuario no es válido");
 
             double precio = this.CalcularPrecio();
-            if (clienteFinaliza.Saldo <= precio) throw new Exception($"No tienes saldo suficiente. Saldo actual: $ {clienteFinaliza.Saldo}.");
+            if (clienteFinaliza.Saldo < precio) throw new Exception($"No tienes saldo suficiente. Saldo actual: $ {clienteFinaliza.Saldo}.");
 
             _estado = EstadoPublicacion.CERRADA;
             _clienteCompra = clienteFinaliza;
