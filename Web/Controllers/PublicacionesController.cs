@@ -67,15 +67,15 @@ namespace Web.Controllers
                 if (id < 0) throw new Exception("El Id de la Publicación no es válido");
                 int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
 
-                TempData["ExitoCompra"] = "La compra se realizó correctamente";
                 miSistema.CerrarPublicacion(idUsuario, id);
+                TempData["ExitoCompra"] = "La compra se realizó correctamente";
+                return RedirectToAction("Listado");
             }
             catch (Exception ex)
             {
                 TempData["ErrorCompra"] = ex.Message;
-
-            }
-            return RedirectToAction("Listado");
+                return RedirectToAction("Listado");
+            }  
         }
 
 
@@ -93,19 +93,19 @@ namespace Web.Controllers
 
         public IActionResult FinalizarSubasta(int id)
         {
-            try
-            {
-                if (id < 0) throw new Exception("El Id de la Publicación no es válido");
-                int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
+            //try
+            //{
+            //    if (id < 0) throw new Exception("El Id de la Publicación no es válido");
+            //    int idUsuario = miSistema.ObtenerIdUsuarioPorEmail(HttpContext.Session.GetString("email"));
 
-                TempData["ExitoCompra"] = "La compra se realizó correctamente";
-                miSistema.CerrarPublicacion(idUsuario, id);
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorCompra"] = ex.Message;
+            //    TempData["ExitoCompra"] = "La compra se realizó correctamente";
+            //    miSistema.CerrarPublicacion(idUsuario, id);
+            //}
+            //catch (Exception ex)
+            //{
+            //    TempData["ErrorCompra"] = ex.Message;
 
-            }
+            //}
             return RedirectToAction("ListadoSubastas");
         }
     }

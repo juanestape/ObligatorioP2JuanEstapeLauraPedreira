@@ -139,7 +139,7 @@ namespace Dominio
         {
             AltaPublicacion(new Venta("Verano en la Playa", EstadoPublicacion.ABIERTA, new DateTime(2024, 09, 15), true));
             AltaPublicacion(new Venta("Aventura en el Camping", EstadoPublicacion.CERRADA, new DateTime(2024, 08, 12), false));
-            AltaPublicacion(new Venta("Pack de Ciclismo", EstadoPublicacion.ABIERTA, new DateTime(2024, 10, 02), true));
+            AltaPublicacion(new Venta("Pack de Ciclismo", EstadoPublicacion.ABIERTA, new DateTime(2024, 10, 02), false));
             AltaPublicacion(new Venta("Picnic en el Parque", EstadoPublicacion.ABIERTA, new DateTime(2024, 07, 20), false));
             AltaPublicacion(new Venta("Equipamiento para Tenis", EstadoPublicacion.ABIERTA, new DateTime(2024, 08, 05), false));
             AltaPublicacion(new Venta("Jornada de Pesca", EstadoPublicacion.ABIERTA, new DateTime(2024, 09, 29), true));
@@ -206,10 +206,10 @@ namespace Dominio
             AgregarArticuloAPublicacion(2, 26);
             AgregarArticuloAPublicacion(2, 44);
 
-            AgregarArticuloAPublicacion(3, 5);
-            AgregarArticuloAPublicacion(3, 7);
-            AgregarArticuloAPublicacion(3, 27);
-            AgregarArticuloAPublicacion(3, 19);
+            AgregarArticuloAPublicacion(3, 1);
+            AgregarArticuloAPublicacion(3, 2);
+            AgregarArticuloAPublicacion(3, 3);
+            AgregarArticuloAPublicacion(3, 4);
 
             AgregarArticuloAPublicacion(4, 18);
             AgregarArticuloAPublicacion(4, 37);

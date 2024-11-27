@@ -27,26 +27,25 @@ namespace Dominio
             {
                 total += a.PrecioVenta;
             }
-            double descuento = 0;
-            if (_ofertaR) descuento = 20;
-            return descuento;
+            if (_ofertaR) total -= total * 0.20;
+
+            return total;
         }
 
         public override void Cerrar(Usuario usuarioFinaliza)
         {
             Cliente clienteFinaliza = usuarioFinaliza as Cliente;
-            double precio = this.CalcularPrecio();
+            if (clienteFinaliza == null) throw new Exception("El Usuario no es válido");
 
-            if (clienteFinaliza.Saldo >= precio)
-            {
-                if (clienteFinaliza == null) throw new Exception("El Usuario no es válido");
-                _estado = EstadoPublicacion.CERRADA;
-                _clienteCompra = clienteFinaliza;
-                _usuarioFinaliza = clienteFinaliza;
-                _fechaFin = DateTime.Now;
-                clienteFinaliza.Saldo -= precio;
-            }
-            throw new Exception("El Usuario no tiene saldo suficiente");
+            double precio = this.CalcularPrecio();
+            if (clienteFinaliza.Saldo <= precio) throw new Exception($"No tienes saldo suficiente. Saldo actual: $ {clienteFinaliza.Saldo}.");
+
+            _estado = EstadoPublicacion.CERRADA;
+            _clienteCompra = clienteFinaliza;
+            _usuarioFinaliza = clienteFinaliza;
+            _fechaFin = DateTime.Now;
+            clienteFinaliza.Saldo -= precio;
+
         }
     }
 }

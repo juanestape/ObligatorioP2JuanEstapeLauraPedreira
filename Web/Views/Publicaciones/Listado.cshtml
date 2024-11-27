@@ -44,14 +44,7 @@ else
                 <tr>
                     <td>@p.Nombre</td>
                     <td>@p.Estado</td>
-                    @if (p.TipoPublicacion() == "Subasta")
-                    {
-                        <td>@p.CalcularPrecio()</td>
-                    }
-                    @if (p.TipoPublicacion() == "Venta")
-                    {
-                        <td>@p.CalcularTotalPrecio()</td>
-                    }
+                    <td>@p.CalcularPrecio()</td>
                     @if (@p.Estado == EstadoPublicacion.ABIERTA)
                     {
                         @if (p.TipoPublicacion() == "Venta")

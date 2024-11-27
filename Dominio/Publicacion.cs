@@ -73,20 +73,6 @@ namespace Dominio
 
         public abstract double CalcularPrecio();
 
-        public double CalcularTotalPrecio() 
-        {
-            double total = 0;
-            foreach (Articulo a in _articulos) 
-            {
-                total += a.PrecioVenta;
-            }
-
-            double descuento = this.CalcularPrecio();
-            total -= total * descuento / 100;
-
-            return total;
-        }
-
         public abstract void Cerrar(Usuario usuarioFinaliza);
 
         public int CompareTo(Publicacion? other) // Usamos el método CompareTo que me obliga usar el IComparable. Recibe por parámetro el segundo objeto a comparar
