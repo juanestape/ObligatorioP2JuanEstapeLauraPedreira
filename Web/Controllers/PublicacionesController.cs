@@ -60,6 +60,7 @@ namespace Web.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult FinalizarVenta(int id)
         {
             try
@@ -92,7 +93,7 @@ namespace Web.Controllers
             return View();
         }
 
-
+        [HttpGet]
         public IActionResult FinalizarSubasta(int id)
         {
             try
