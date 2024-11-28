@@ -69,12 +69,6 @@ namespace Dominio
             if (string.IsNullOrEmpty(_contrasenia) || _contrasenia.Length < 8) throw new Exception("La contraseña debe tener al menos 8 dígitos.");
         }
 
-        //public override bool Equals(object obj)
-        //{
-        //    Usuario u = obj as Usuario;
-        //    return u != null && this._email.Equals(u._email);
-        //}
-
         public abstract string Rol();
     }
 }
