@@ -33,8 +33,17 @@ namespace Dominio
         {
             {
                 if (usuario == null) throw new Exception("El usuario no puede ser nulo");
+
+                bool tieneRegistro = false;
+                if (_usuarios.Contains(usuario)) tieneRegistro = true;
+
+                if (tieneRegistro) throw new Exception("Ya existe un usuario con ese email");
                 usuario.Validar();
-                _usuarios.Add(usuario);
+
+                if (!tieneRegistro)
+                {
+                    _usuarios.Add(usuario);
+                }
             }
         }
 
@@ -375,7 +384,7 @@ namespace Dominio
         {
             Usuario usuarioBuscado = null;
             int i = 0;
-            while (usuarioBuscado == null && i < _usuarios.Count) 
+            while (usuarioBuscado == null && i < _usuarios.Count)
             {
                 if (_usuarios[i].Email == email && _usuarios[i].Contrasenia == contrasena) usuarioBuscado = _usuarios[i]; // Busco en la lista de Usuarios el que coincida con el email y contraseña que viene por parametro
                 i++;
@@ -419,8 +428,8 @@ namespace Dominio
             return buscada;
         }
 
-        public void CambiarSaldoDeCliente(int idCliente, double cantidad) 
-        { 
+        public void CambiarSaldoDeCliente(int idCliente, double cantidad)
+        {
             Cliente c = ObtenerClientePorId(idCliente);
             if (c == null) throw new Exception($"El Cliente {idCliente} no se encontró");
             c.CargarSaldo(cantidad);

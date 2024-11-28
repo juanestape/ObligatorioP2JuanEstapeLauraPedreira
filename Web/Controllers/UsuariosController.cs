@@ -59,7 +59,9 @@ namespace Web.Controllers
                 if (string.IsNullOrEmpty(usuarioCliente.Email)) throw new Exception("El Email no puede ser vacío");
                 if (string.IsNullOrEmpty(usuarioCliente.Contrasenia)) throw new Exception("La Contraseña no puede ser vacía");
 
-                miSistema.AltaUsuarios(usuarioCliente);
+                Usuario usuario = usuarioCliente as Usuario;
+                miSistema.AltaUsuarios(usuario);
+
                 TempData["Exito"] = $"Usuario {usuarioCliente.Nombre} registrado correctamente"; // TempData sobrevive a una petición, la seteamos acá y la usamos cuando redireccione a Login
                 return RedirectToAction("Login"); // Redireccionamos la petición a la acción Login para que haga el método y retorne la vista
             }

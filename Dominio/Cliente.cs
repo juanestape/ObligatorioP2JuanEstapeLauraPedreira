@@ -31,11 +31,10 @@ namespace Dominio
 
             return retorno;
         }
-
         public override bool Equals(object obj)
         {
-            Cliente c = obj as Cliente;
-            return c != null && this._id.Equals(c._id);
+            Cliente u = obj as Cliente;
+            return u != null && this._email.Equals(u._email);
         }
 
         public override string Rol()
@@ -43,7 +42,7 @@ namespace Dominio
             return "Cliente";
         }
 
-        public void CargarSaldo(double cantidad )
+        public void CargarSaldo(double cantidad)
         {
             if (cantidad <= 0) throw new Exception("El valor debe ser mayor a 0");
             _saldo += cantidad;

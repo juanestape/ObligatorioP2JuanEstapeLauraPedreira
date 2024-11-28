@@ -66,8 +66,14 @@ namespace Dominio
             if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio");
             if (string.IsNullOrEmpty(_apellido)) throw new Exception("El apellido no puede ser vacio.");
             if (string.IsNullOrEmpty(_email)) throw new Exception("El email no puede ser vacio.");
-            if (string.IsNullOrEmpty(_contrasenia) || _contrasenia.Length < 8) throw new Exception("La contraseña debe tener al al menos 8 dígitos.");
+            if (string.IsNullOrEmpty(_contrasenia) || _contrasenia.Length < 8) throw new Exception("La contraseña debe tener al menos 8 dígitos.");
         }
+
+        //public override bool Equals(object obj)
+        //{
+        //    Usuario u = obj as Usuario;
+        //    return u != null && this._email.Equals(u._email);
+        //}
 
         public abstract string Rol();
     }
