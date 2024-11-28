@@ -1,9 +1,10 @@
 ﻿using Dominio.Interfases;
 using System.Linq;
+using System.Security.Principal;
 
 namespace Dominio
 {
-    public abstract class Publicacion : IValidable
+    public abstract class Publicacion : IValidable, IComparable<Publicacion> // Le implementamos a Publicación el método CompareTo, agregando la interface IComparable
     {
         protected int _id;
         protected static int s_idUlt = 1;
@@ -37,6 +38,7 @@ namespace Dominio
         public EstadoPublicacion Estado
         {
             get { return _estado; }
+            set { _estado = value; }
         }
 
         public DateTime Fecha
@@ -54,7 +56,7 @@ namespace Dominio
             if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio.");
         }
 
-        public void AltaArticulo(Articulo a)
+        public void AgregarArticulo(Articulo a) // Método que recibe un Artículo, lo valida y agrega a la lista de Artículos 
         {
             if (a == null) throw new Exception("El artículo no puede ser nulo");
             a.Validar();
@@ -65,6 +67,17 @@ namespace Dominio
             string retorno = $"ID: {_id} - Nombre: {_nombre} - Estado {_estado} - Fecha de publicación: {_fechaPublicacion.ToShortDateString()}";
 
             return retorno;
+        }
+
+        public abstract string TipoPublicacion();
+
+        public abstract double CalcularPrecio();
+
+        public abstract void Cerrar(Usuario usuarioFinaliza);
+
+        public int CompareTo(Publicacion? other) // Usamos el método CompareTo que me obliga usar el IComparable. Recibe por parámetro el segundo objeto a comparar
+        {
+            return _fechaPublicacion.CompareTo(other._fechaPublicacion); // Le paso el primer objeto que quiero comparar con el segundo a comparar
         }
     }
 }

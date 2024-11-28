@@ -1,0 +1,69 @@
+﻿@using Dominio
+
+@{
+    ViewData["Title"] = "Listado";
+}
+
+<h1>Listado</h1>
+
+<br />
+
+@if (ViewBag.Exito != null)
+{
+    <div class="alert alert-success">@ViewBag.Exito</div>
+}
+
+@if (ViewBag.ExitoCompra != null)
+{
+    <div class="alert alert-success">@ViewBag.ExitoCompra</div>
+}
+
+@if (ViewBag.ErrorCompra != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorCompra</div>
+}
+
+@if (ViewBag.Listado == null || ViewBag.Listado.Count == 0)
+{
+    <div class="alert alert-danger">No hay Publicaciones en el sistema</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Publicacion p in ViewBag.Listado)
+            {
+                <tr>
+                    <td>@p.Nombre</td>
+                    <td>@p.Estado</td>
+                    <td>$ @p.CalcularPrecio()</td>
+                    @if (@p.Estado == EstadoPublicacion.ABIERTA)
+                    {
+                        @if (p.TipoPublicacion() == "Venta")
+                        {
+                            <td><a href="/publicaciones/FinalizarVenta/@p.Id" class="btn btn-primary">Comprar</a></td>
+                        }
+                        @if (p.TipoPublicacion() == "Subasta")
+                        {
+                            <td><a href="/publicaciones/RealizarOferta?id=@p.Id" class="btn btn-primary">Realizar Oferta</a></td>
+                        }
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}

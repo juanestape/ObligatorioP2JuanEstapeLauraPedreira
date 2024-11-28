@@ -26,17 +26,49 @@ namespace Dominio
             _contrasenia = contrasenia;
         }
 
+        public Usuario() // Constructor vacío de parámetro para el model binding
+        {
+            _id = s_idUlt;
+            s_idUlt++;
+        }
+
         public int Id
         {
             get { return _id; }
         }
+
+        public string Nombre
+        { 
+            get { return _nombre; }
+            set { _nombre = value; }
+        }
+
+        public string Apellido
+        {
+            get { return _apellido; }
+            set { _apellido = value; }
+        }
+        public string Email
+        {
+            get { return _email; }
+            set { _email = value; }
+        }
+
+        public string Contrasenia
+        {
+            get { return _contrasenia; }
+            set { _contrasenia = value; }
+        }
+
 
         public void Validar()
         {
             if (string.IsNullOrEmpty(_nombre)) throw new Exception("El nombre no puede ser vacio");
             if (string.IsNullOrEmpty(_apellido)) throw new Exception("El apellido no puede ser vacio.");
             if (string.IsNullOrEmpty(_email)) throw new Exception("El email no puede ser vacio.");
-            if (string.IsNullOrEmpty(_contrasenia)) throw new Exception("La contraseña no puede ser vacia.");
+            if (string.IsNullOrEmpty(_contrasenia) || _contrasenia.Length < 8) throw new Exception("La contraseña debe tener al menos 8 dígitos.");
         }
+
+        public abstract string Rol();
     }
 }

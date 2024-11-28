@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dominio
 {
     public class Sistema
     {
+        private static Sistema s_instancia; // Primer paso Singleton para no permitir crear más de una instancia de sistema
+
         public List<Articulo> _articulos = new List<Articulo>();
         public List<Publicacion> _publicaciones = new List<Publicacion>();
         public List<Usuario> _usuarios = new List<Usuario>();
-        public Sistema()
+        private Sistema() // Se invocan los métodos de precarga para que el Sistema inicie con datos // Segundo paso Singleton: hacer privado el contructor de sistema
         {
             PrecargarArticulos();
             PrecargarUsuarios();
@@ -20,16 +23,41 @@ namespace Dominio
             PrecargarArticuloAPublicacion();
             PrecargarOfertasASubastas();
         }
+
+        public List<Publicacion> Publicaciones
+        {
+            get { return _publicaciones; }
+        }
+
         public void AltaUsuarios(Usuario usuario)
         {
             {
                 if (usuario == null) throw new Exception("El usuario no puede ser nulo");
+
+                bool tieneRegistro = false;
+                if (_usuarios.Contains(usuario)) tieneRegistro = true;
+
+                if (tieneRegistro) throw new Exception("Ya existe un usuario con ese email");
                 usuario.Validar();
-                _usuarios.Add(usuario);
+
+                if (!tieneRegistro)
+                {
+                    _usuarios.Add(usuario);
+                }
             }
         }
 
-        private void PrecargarUsuarios()
+        public static Sistema Instancia // Tercer paso Singleton: hacer la property estática del atributo. Entonces si el atributo es nulo, genero un nuevo objeto de tipo Sistema, y siempre retorno ese objeto guardado en el atributo
+        {
+            get
+            {
+                if (s_instancia == null) s_instancia = new Sistema();
+                return s_instancia;
+            }
+        }
+
+
+        private void PrecargarUsuarios() // Utiliza el métdo AltaUsuarios para crear un nuevo Usuario tipo Administrador o Cliente
         {
             AltaUsuarios(new Administrador("Alejandro", "García", "alejandro.garcia@admin.com", "AdminAle1234"));
             AltaUsuarios(new Administrador("Camila", "Díaz", "camila.diaz@admin.com", "AdminCamila1234"));
@@ -39,9 +67,9 @@ namespace Dominio
             AltaUsuarios(new Cliente("Laura", "Fernández", "laura.fernandez@mail.com", "LauFer789", 1800));
             AltaUsuarios(new Cliente("Pedro", "Rodríguez", "pedro.rodriguez@mail.com", "PedroRz987", 3200));
             AltaUsuarios(new Cliente("Ana", "Sánchez", "ana.sanchez@mail.com", "AnaSnchz456", 1000));
-            AltaUsuarios(new Cliente("Luis", "Martínez", "luis.martinez@mail.com", "LuisMtz234", 3700));
-            AltaUsuarios(new Cliente("Sofía", "Ramírez", "sofia.ramirez@mail.com", "SofRam123", 2800));
-            AltaUsuarios(new Cliente("Diego", "Torres", "diego.torres@mail.com", "DiegoTor789", 700));
+            AltaUsuarios(new Cliente("Luis", "Martínez", "luis.martinez@mail.com", "LuisMtz234", 100));
+            AltaUsuarios(new Cliente("Sofía", "Ramírez", "sofia.ramirez@mail.com", "SofRam123", 30));
+            AltaUsuarios(new Cliente("Diego", "Torres", "diego.torres@mail.com", "DiegoTor789", 20));
             AltaUsuarios(new Cliente("Valentina", "Morales", "valentina.morales@mail.com", "ValeMor456", 5000));
         }
 
@@ -119,8 +147,8 @@ namespace Dominio
         private void PrecargarPublicaciones()
         {
             AltaPublicacion(new Venta("Verano en la Playa", EstadoPublicacion.ABIERTA, new DateTime(2024, 09, 15), true));
-            AltaPublicacion(new Venta("Aventura en el Camping", EstadoPublicacion.ABIERTA, new DateTime(2024, 08, 12), false));
-            AltaPublicacion(new Venta("Pack de Ciclismo", EstadoPublicacion.ABIERTA, new DateTime(2024, 10, 02), true));
+            AltaPublicacion(new Venta("Aventura en el Camping", EstadoPublicacion.CERRADA, new DateTime(2024, 08, 12), false));
+            AltaPublicacion(new Venta("Pack de Ciclismo", EstadoPublicacion.ABIERTA, new DateTime(2024, 10, 02), false));
             AltaPublicacion(new Venta("Picnic en el Parque", EstadoPublicacion.ABIERTA, new DateTime(2024, 07, 20), false));
             AltaPublicacion(new Venta("Equipamiento para Tenis", EstadoPublicacion.ABIERTA, new DateTime(2024, 08, 05), false));
             AltaPublicacion(new Venta("Jornada de Pesca", EstadoPublicacion.ABIERTA, new DateTime(2024, 09, 29), true));
@@ -135,13 +163,13 @@ namespace Dominio
             AltaPublicacion(new Subasta("Tenis Avanzado", EstadoPublicacion.ABIERTA, new DateTime(2024, 09, 26)));
             AltaPublicacion(new Subasta("Ciclista", EstadoPublicacion.ABIERTA, new DateTime(2024, 08, 15)));
             AltaPublicacion(new Subasta("Día de Playa Completo", EstadoPublicacion.ABIERTA, new DateTime(2024, 07, 05)));
-            AltaPublicacion(new Subasta("Kit de Supervivencia", EstadoPublicacion.ABIERTA, new DateTime(2024, 08, 01)));
+            AltaPublicacion(new Subasta("Kit de Supervivencia", EstadoPublicacion.CERRADA, new DateTime(2024, 08, 01)));
             AltaPublicacion(new Subasta("Deportes Acuáticos", EstadoPublicacion.ABIERTA, new DateTime(2024, 07, 20)));
             AltaPublicacion(new Subasta("Fitness Completo", EstadoPublicacion.ABIERTA, new DateTime(2024, 06, 28)));
         }
 
         // MÉTODOS PARA PRECARGAR ARTICULOS A PUBLICACIONES
-        public Publicacion ObtenerPublicacionPorId(int id)
+        public Publicacion ObtenerPublicacionPorId(int id) // Método para conseguir objeto a través del Id
         {
             Publicacion buscada = null;
             int i = 0;
@@ -164,22 +192,22 @@ namespace Dominio
             }
             return buscado;
         }
-        public void AgregarArticuloAPublicacion(int idPublicacion, int idArticulo)
+        public void AgregarArticuloAPublicacion(int idPublicacion, int idArticulo) // Recibe un Id de Publicación y un Id de Artículos, los busca con los métodos anteriores y agrega el artículo a la publicación
         {
             Publicacion publicacionBuscada = ObtenerPublicacionPorId(idPublicacion);
             if (publicacionBuscada == null) throw new Exception("No se encontro publicacion con ese Id");
             Articulo articuloBuscado = ObtenerArticuloPorId(idArticulo);
             if (articuloBuscado == null) throw new Exception("No se encontro articulo con ese Id");
             if (publicacionBuscada.Articulo.Contains(articuloBuscado)) throw new Exception("Este articulo ya existe en la publicacion");
-            publicacionBuscada.AltaArticulo(articuloBuscado);
+            publicacionBuscada.AgregarArticulo(articuloBuscado);
         }
 
         private void PrecargarArticuloAPublicacion()
         {
+            AgregarArticuloAPublicacion(1, 1);
             AgregarArticuloAPublicacion(1, 2);
             AgregarArticuloAPublicacion(1, 3);
-            AgregarArticuloAPublicacion(1, 9);
-            AgregarArticuloAPublicacion(1, 34);
+            AgregarArticuloAPublicacion(1, 4);
 
             AgregarArticuloAPublicacion(2, 21);
             AgregarArticuloAPublicacion(2, 20);
@@ -187,10 +215,10 @@ namespace Dominio
             AgregarArticuloAPublicacion(2, 26);
             AgregarArticuloAPublicacion(2, 44);
 
-            AgregarArticuloAPublicacion(3, 5);
-            AgregarArticuloAPublicacion(3, 7);
-            AgregarArticuloAPublicacion(3, 27);
-            AgregarArticuloAPublicacion(3, 19);
+            AgregarArticuloAPublicacion(3, 1);
+            AgregarArticuloAPublicacion(3, 2);
+            AgregarArticuloAPublicacion(3, 3);
+            AgregarArticuloAPublicacion(3, 4);
 
             AgregarArticuloAPublicacion(4, 18);
             AgregarArticuloAPublicacion(4, 37);
@@ -291,18 +319,18 @@ namespace Dominio
             return buscado;
         }
 
-        public void AgregaroOfertaASubasta(int idSubasta, int idCliente, double monto, DateTime fecha)
+        public void AgregaroOfertaASubasta(int idSubasta, int idCliente, double monto, DateTime fecha) // Método para agregar una oferta a una subasta
         {
             Subasta subastaBuscada = ObtenerSubastaPorId(idSubasta);
-            if (subastaBuscada == null) throw new Exception("No se encontro subasta con ese Id");
-            Usuario clienteBuscado = ObtenerUsuarioPorId(idCliente);
-            if (clienteBuscado == null) throw new Exception("No se encontro cliente con ese Id");
+            if (subastaBuscada == null) throw new Exception($"No se encontro subasta con ese Id: {idSubasta}");
+            Cliente clienteBuscado = ObtenerClientePorId(idCliente);
+            if (clienteBuscado == null) throw new Exception($"No se encontro cliente con ese Id: {idCliente}");
             bool tieneOferta = false;
             foreach (Oferta a in subastaBuscada.Oferta)
             {
                 if (a.Cliente.Equals(clienteBuscado)) tieneOferta = true;
             }
-            if (tieneOferta) throw new Exception("Este cliente ya realizo una oferta");
+            if (tieneOferta) throw new Exception($"El cliente {clienteBuscado.Email} ya realizo una oferta");
             Oferta o = new Oferta(clienteBuscado, monto, fecha);
             subastaBuscada.AltaOferta(o);
         }
@@ -312,6 +340,8 @@ namespace Dominio
             AgregaroOfertaASubasta(11, 9, 950, new DateTime(2024, 09, 24));
             AgregaroOfertaASubasta(12, 3, 600, new DateTime(2024, 09, 20));
             AgregaroOfertaASubasta(12, 7, 850, new DateTime(2024, 09, 23));
+            AgregaroOfertaASubasta(13, 10, 1200, new DateTime(2024, 09, 20));
+            AgregaroOfertaASubasta(13, 11, 1350, new DateTime(2024, 09, 23));
         }
 
         public List<Usuario> MostrarClientes()
@@ -348,6 +378,80 @@ namespace Dominio
                 if (p.Fecha.Date >= fecha1 && p.Fecha.Date <= fecha2) publicaciones.Add(p);
             }
             return publicaciones;
+        }
+
+        public Usuario Login(string email, string contrasena) // Método Login para los dos tipos de Usuarios
+        {
+            Usuario usuarioBuscado = null;
+            int i = 0;
+            while (usuarioBuscado == null && i < _usuarios.Count)
+            {
+                if (_usuarios[i].Email == email && _usuarios[i].Contrasenia == contrasena) usuarioBuscado = _usuarios[i]; // Busco en la lista de Usuarios el que coincida con el email y contraseña que viene por parametro
+                i++;
+            }
+            return usuarioBuscado;
+        }
+
+        public int ObtenerIdUsuarioPorEmail(string email) // Método para obtener el id del usuario logueado usando el email que guardamos en la session
+        {
+            int idBuscado = 0;
+            int i = 0;
+            while (idBuscado <= 0 && i < _usuarios.Count)
+            {
+                if (_usuarios[i].Email == email) idBuscado = _usuarios[i].Id;
+                i++;
+            }
+            return idBuscado;
+        }
+
+        public Cliente ObtenerClientePorId(int id)
+        {
+            Cliente buscado = null;
+            int i = 0;
+            while (i < _usuarios.Count && buscado == null)
+            {
+                if (_usuarios[i].Id == id && _usuarios[i] is Cliente) buscado = _usuarios[i] as Cliente;
+                i++;
+            }
+            return buscado;
+        }
+
+        public Venta ObtenerVentaPorId(int id)
+        {
+            Venta buscada = null;
+            int i = 0;
+            while (i < _publicaciones.Count && buscada == null)
+            {
+                if (_publicaciones[i].Id == id && _publicaciones[i] is Venta) buscada = _publicaciones[i] as Venta;
+                i++;
+            }
+            return buscada;
+        }
+
+        public void CambiarSaldoDeCliente(int idCliente, double cantidad)
+        {
+            Cliente c = ObtenerClientePorId(idCliente);
+            if (c == null) throw new Exception($"El Cliente {idCliente} no se encontró");
+            c.CargarSaldo(cantidad);
+        }
+
+        public void CerrarPublicacion(int idUsuario, int idPublicacion)
+        {
+            Usuario u = ObtenerUsuarioPorId(idUsuario);
+            Publicacion p = ObtenerPublicacionPorId(idPublicacion);
+            p.Cerrar(u);
+        }
+
+        public List<Publicacion> PublicacionesOrdenadasPorFecha()
+        {
+            _publicaciones.Sort(); // Invocamos el método sort para ordenar. En este caso al ser un objeto tengo que decirle a través del método ComparteTo que usa por detrás, cual es la forma que quiero usar para ordenar
+            return _publicaciones;
+        }
+
+        public double SaldoActual(int idUsuario)
+        {
+            Cliente c = ObtenerClientePorId(idUsuario);
+            return c.Saldo;
         }
     }
 }

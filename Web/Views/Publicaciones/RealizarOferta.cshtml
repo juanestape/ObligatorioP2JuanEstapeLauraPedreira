@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "RealizarOferta";
+}
+
+<h1>Realizar Oferta en la Subasta</h1>
+
+<br />
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<br />
+
+<div class="card border-success mb-3 " style="max-width: 24rem;">
+    <div class="card-body ">
+        <form method="post" action="/publicaciones/RealizarOferta">
+            <label class="form-label">Oferta Nueva</label>
+            <input class="form-control" type="number" placeholder="Ingrese oferta" name="nuevaOferta" />
+
+            <input type="number" value="@ViewBag.Id" name="id" hidden />
+            <br />
+
+            <input type="submit" class="btn btn-success" value="Ofertar" />
+        </form>
+    </div>
+</div>
